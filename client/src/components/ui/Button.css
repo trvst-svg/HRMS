@@ -1,0 +1,141 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Sizes */
+.btn--sm {
+  padding: 6px 14px;
+  font-size: var(--font-size-xs);
+  min-height: 32px;
+}
+
+.btn--md {
+  padding: 10px 20px;
+  font-size: var(--font-size-sm);
+  min-height: 40px;
+}
+
+.btn--lg {
+  padding: 12px 28px;
+  font-size: var(--font-size-base);
+  min-height: 48px;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+/* Variants */
+.btn--primary {
+  background: var(--gradient-brand);
+  color: #fff;
+  box-shadow: var(--shadow-md), var(--shadow-glow-brand);
+}
+.btn--primary:hover:not(:disabled) {
+  box-shadow:
+    var(--shadow-lg),
+    0 0 30px rgba(59, 130, 246, 0.4);
+}
+
+.btn--secondary {
+  background: var(--color-bg-glass);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-bg-glass-hover);
+  border-color: var(--color-brand);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+.btn--ghost:hover:not(:disabled) {
+  background: var(--color-bg-glass);
+  color: var(--color-text-primary);
+}
+
+.btn--danger {
+  background: var(--color-danger);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+.btn--danger:hover:not(:disabled) {
+  background: var(--color-danger-light);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-danger);
+}
+
+.btn--success {
+  background: var(--color-success);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+.btn--success:hover:not(:disabled) {
+  background: var(--color-success-light);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-success);
+}
+
+/* Spinner */
+.btn__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.btn__icon {
+  flex-shrink: 0;
+}
+
+/* Shine Hover Effect */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: none;
+}
+
+.btn:hover::after {
+  left: 160%;
+  transition: left 0.6s ease-in-out;
+}

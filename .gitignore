@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build outputs
+client/dist/
+client/build/
+
+# Local environment files (containing secrets/passwords)
+.env
+server/.env
+server/src/.env
+
+# Editor / System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
