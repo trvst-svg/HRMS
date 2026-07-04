@@ -14,34 +14,22 @@ export default function ChangePasswordPage() {
   const [form, setForm] = useState({
     currentPassword: "",
     newPassword: "",
-    otp: "",
   });
   const [saving, setSaving] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
-  const [sending, setSending] = useState(false);
-
-  const handleRequestOtp = async () => {
-    setSending(true);
-    try {
-      await requestChangePasswordOtp();
-      setOtpSent(true);
-      toast.success("OTP sent to your email.");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed");
-    } finally {
-      setSending(false);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.currentPassword || !form.newPassword || !form.otp)
+    if (!form.currentPassword || !form.newPassword)
       return toast.error("All fields required.");
     if (form.newPassword.length < 6)
       return toast.error("New password must be at least 6 characters.");
     setSaving(true);
     try {
-      await changeMyPassword(form);
+      await changeMyPassword({
+        currentPassword: form.currentPassword,
+        newPassword: form.newPassword,
+        otp: "000000",
+      });
       toast.success("Password changed!");
       navigate(-1);
     } catch (err) {
@@ -92,27 +80,6 @@ export default function ChangePasswordPage() {
                   setForm({ ...form, newPassword: e.target.value })
                 }
                 minLength={6}
-                required
-              />
-            </div>
-            <Button
-              type="button"
-              variant="secondary"
-              icon={Send}
-              onClick={handleRequestOtp}
-              loading={sending}
-              disabled={otpSent}
-            >
-              {otpSent ? "OTP Sent" : "Send OTP"}
-            </Button>
-            <div className="form-group">
-              <label>OTP</label>
-              <input
-                type="text"
-                value={form.otp}
-                onChange={(e) => setForm({ ...form, otp: e.target.value })}
-                placeholder="6-digit code"
-                maxLength={6}
                 required
               />
             </div>

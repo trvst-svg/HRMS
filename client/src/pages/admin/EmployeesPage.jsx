@@ -12,7 +12,7 @@ import Card, {
   CardContent,
 } from "../../components/ui/Card";
 import { PageLoader } from "../../components/ui/Spinner";
-import { UserPlus, Search, Trash2, Edit, Eye } from "lucide-react";
+import { UserPlus, Search, Trash2, Edit, Eye, UserX } from "lucide-react";
 import { formatDate } from "../../utils/helpers";
 import toast from "react-hot-toast";
 
@@ -68,10 +68,11 @@ export default function EmployeesPage() {
   }, []);
 
   const handleDelete = async (id, action) => {
-    if (!confirm(`Are you sure you want to ${action} this employee?`)) return;
+    const actionWord = action === "layoff" ? "lay off" : "fire";
+    if (!confirm(`Are you sure you want to ${actionWord} this employee?`)) return;
     try {
       await deleteEmployee(id, action);
-      toast.success(`Employee ${action === "layoff" ? "laid off" : "removed"}`);
+      toast.success(`Employee ${action === "layoff" ? "laid off" : "fired and removed"}`);
       load(pagination.page);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed");
@@ -118,12 +119,23 @@ export default function EmployeesPage() {
                   variant="ghost"
                   onClick={() => navigate(`/admin-employee-profile/${r._id}`)}
                   icon={Eye}
+                  title="View Profile"
                 />
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={() => handleDelete(r._id, "layoff")}
                   icon={Trash2}
+                  title="Layoff Employee"
+                  style={{ color: "var(--color-warning)" }}
+                />
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleDelete(r._id, "fire")}
+                  icon={UserX}
+                  title="Fire Employee"
+                  style={{ color: "var(--color-danger)" }}
                 />
               </div>
             ),

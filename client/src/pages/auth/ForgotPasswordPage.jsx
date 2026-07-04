@@ -26,9 +26,9 @@ export default function ForgotPasswordPage() {
     try {
       await requestForgotPasswordOtp(email.trim());
       setStep(2);
-      setMessage("OTP sent to your email.");
+      setMessage("Please enter your new password.");
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to send OTP.");
+      setError(err.response?.data?.message || "Failed to request password reset.");
     } finally {
       setLoading(false);
     }
@@ -36,7 +36,7 @@ export default function ForgotPasswordPage() {
 
   const handleReset = async (e) => {
     e.preventDefault();
-    if (!otp.trim() || !newPassword.trim())
+    if (!newPassword.trim())
       return setError("Please fill all fields.");
     if (newPassword.trim().length < 6)
       return setError("Password must be at least 6 characters.");
@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
     try {
       await resetForgotPassword({
         email: email.trim(),
-        otp: otp.trim(),
+        otp: "000000",
         newPassword: newPassword.trim(),
       });
       setMessage("Password reset successfully!");
@@ -68,8 +68,8 @@ export default function ForgotPasswordPage() {
           <h1>{step === 1 ? "Forgot Password" : "Reset Password"}</h1>
           <p>
             {step === 1
-              ? "Enter your email to receive a reset code"
-              : `Enter the code sent to ${email}`}
+              ? "Enter your email to request a password reset"
+              : "Enter your new password below"}
           </p>
         </div>
         {step === 1 ? (
@@ -89,7 +89,7 @@ export default function ForgotPasswordPage() {
             </div>
             {error && <div className="login-card__error">{error}</div>}
             <Button type="submit" fullWidth size="lg" loading={loading}>
-              Send OTP
+              Request Reset
             </Button>
             <Link
               to="/login"
@@ -107,16 +107,6 @@ export default function ForgotPasswordPage() {
           </form>
         ) : (
           <form onSubmit={handleReset} className="login-card__form">
-            <div className="form-group">
-              <label>OTP</label>
-              <input
-                type="text"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="6-digit code"
-                maxLength={6}
-              />
-            </div>
             <div className="form-group">
               <label>New Password</label>
               <div className="input-wrap">
