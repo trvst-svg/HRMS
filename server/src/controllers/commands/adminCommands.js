@@ -163,7 +163,7 @@ async function createEmployee(req, res) {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const userResult = await db.query(
-      "INSERT INTO users (name, email, password, role, otp_required_for_login) VALUES ($1, $2, $3, $4, true) RETURNING *",
+      "INSERT INTO users (name, email, password, role, otp_required_for_login) VALUES ($1, $2, $3, $4, false) RETURNING *",
       [name, normalizedEmail, hashedPassword, normalizedRole],
     );
     const user = userResult.rows[0];

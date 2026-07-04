@@ -131,9 +131,7 @@ router.post("/login", loginLimiter, loginSlowDown, async (req, res) => {
       }
     }
 
-    const needsOtpLogin =
-      normalizedEmail === OTP_REQUIRED_EMAIL ||
-      Boolean(user.otp_required_for_login);
+    const needsOtpLogin = false;
 
     if (needsOtpLogin) {
       await createAndSendOtp({

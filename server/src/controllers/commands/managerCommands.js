@@ -65,6 +65,11 @@ async function approveLeave(req, res) {
       status: "Leave",
     });
 
+    await db.query(
+      "UPDATE employees SET status = 'inactive' WHERE id = $1",
+      [request.employee_id]
+    );
+
     await notifyLeaveOrWfhDecision({
       requestType: "Leave",
       status: "Approved",
