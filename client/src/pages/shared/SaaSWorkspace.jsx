@@ -489,10 +489,10 @@ export default function SaaSWorkspace() {
       {/* Contracts Tab */}
       {activeTab === "contracts" && (
         <div
+          className={role === "admin" ? "grid-responsive-1-2" : ""}
           style={{
             display: "grid",
             gridTemplateColumns: "1fr",
-            lg: role === "admin" ? "1fr 2fr" : "1fr",
             gap: "var(--space-6)",
           }}
         >
@@ -724,10 +724,10 @@ export default function SaaSWorkspace() {
       {/* OKRs Tab */}
       {activeTab === "okrs" && (
         <div
+          className={role !== "employee" ? "grid-responsive-1-2" : ""}
           style={{
             display: "grid",
             gridTemplateColumns: "1fr",
-            lg: role !== "employee" ? "1fr 2fr" : "1fr",
             gap: "var(--space-6)",
           }}
         >
@@ -954,10 +954,10 @@ export default function SaaSWorkspace() {
       {/* ATS Recruiting Tab */}
       {activeTab === "ats" && (
         <div
+          className={role === "admin" ? "grid-responsive-1-2" : ""}
           style={{
             display: "grid",
             gridTemplateColumns: "1fr",
-            lg: role === "admin" ? "1fr 2fr" : "1fr",
             gap: "var(--space-6)",
           }}
         >
@@ -1262,10 +1262,10 @@ export default function SaaSWorkspace() {
       {/* Shifts Scheduling Tab */}
       {activeTab === "shifts" && (
         <div
+          className={role !== "employee" ? "grid-responsive-1-2" : ""}
           style={{
             display: "grid",
             gridTemplateColumns: "1fr",
-            lg: role !== "employee" ? "1fr 2fr" : "1fr",
             gap: "var(--space-6)",
           }}
         >

@@ -104,15 +104,7 @@ export default function AdminProjectsPage() {
         </p>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
-          lg: "1fr 2fr",
-          gap: "var(--space-6)",
-        }}
-        className="analytics-grid"
-      >
+      <div className="analytics-grid grid-responsive-1-2">
         {/* Project Creation Form */}
         <Card className="hover-lift">
           <CardHeader>

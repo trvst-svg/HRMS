@@ -29,6 +29,7 @@ import {
   Moon,
   Award,
   Laptop,
+  X,
 } from "lucide-react";
 import "./Sidebar.css";
 
@@ -91,7 +92,7 @@ const employeeMenu = [
   { label: "Profile", path: "/employee-profile", icon: UserCircle },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ mobileOpen, setMobileOpen }) {
   const { role, email, clearSession } = useAuth();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
@@ -132,7 +133,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className={`sidebar ${collapsed ? "sidebar--collapsed" : ""}`}>
+    <aside className={`sidebar ${collapsed ? "sidebar--collapsed" : ""} ${mobileOpen ? "sidebar--open" : ""}`}>
       {/* Brand */}
       <div className="sidebar__brand">
         <div className="sidebar__logo">
@@ -150,10 +151,22 @@ export default function Sidebar() {
         {!collapsed && <span className="sidebar__brand-text">Nexora</span>}
         <button
           className="sidebar__toggle"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => {
+            if (window.innerWidth <= 768) {
+              setMobileOpen && setMobileOpen(false);
+            } else {
+              setCollapsed(!collapsed);
+            }
+          }}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          {window.innerWidth <= 768 ? (
+            <X size={18} />
+          ) : collapsed ? (
+            <ChevronRight size={16} />
+          ) : (
+            <ChevronLeft size={16} />
+          )}
         </button>
       </div>
 
@@ -174,6 +187,7 @@ export default function Sidebar() {
                 `sidebar__link ${isActive ? "sidebar__link--active" : ""}`
               }
               title={collapsed ? item.label : undefined}
+              onClick={() => setMobileOpen && setMobileOpen(false)}
             >
               <item.icon size={18} className="sidebar__link-icon" />
               {!collapsed && (
@@ -215,7 +229,10 @@ export default function Sidebar() {
         </button>
         <button
           className="sidebar__logout"
-          onClick={handleLogout}
+          onClick={() => {
+            setMobileOpen && setMobileOpen(false);
+            handleLogout();
+          }}
           title="Logout"
         >
           <LogOut size={18} />

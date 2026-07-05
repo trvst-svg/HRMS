@@ -72,10 +72,11 @@ app.use(
       // allow non-browser tools (no Origin header — e.g. Postman, curl)
       if (!origin) return cb(null, true);
       if (allowedOrigins.includes(origin)) return cb(null, true);
-      // allow any localhost port for local development
+      // allow any localhost port for local development or ngrok tunnels
       if (
         origin.startsWith("http://localhost:") ||
-        origin.startsWith("http://127.0.0.1:")
+        origin.startsWith("http://127.0.0.1:") ||
+        origin.endsWith(".ngrok-free.dev")
       ) {
         return cb(null, true);
       }

@@ -298,14 +298,7 @@ export default function ManagerProjectsPage() {
       )}
 
       {activeTab === "team" && (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            lg: "1fr 2fr",
-            gap: "var(--space-6)",
-          }}
-        >
+        <div className="grid-responsive-1-2">
           {/* Add Member Card */}
           <Card className="hover-lift">
             <CardHeader>
@@ -411,14 +404,7 @@ export default function ManagerProjectsPage() {
       )}
 
       {activeTab === "tasks" && (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            lg: "1fr 2fr",
-            gap: "var(--space-6)",
-          }}
-        >
+        <div className="grid-responsive-1-2">
           {/* Create Task Form */}
           <Card className="hover-lift">
             <CardHeader>

@@ -246,17 +246,33 @@
   color: var(--color-text-primary);
 }
 
-/* Responsive */
+/* Responsive Mobile Sidebar Drawer */
 @media (max-width: 768px) {
   .sidebar {
-    width: var(--sidebar-collapsed-width);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width) !important;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: var(--z-sidebar);
+    transition: transform var(--transition-slow);
+    box-shadow: var(--shadow-lg);
   }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
   .sidebar__brand-text,
   .sidebar__link-label,
   .sidebar__user-info,
   .sidebar__logout span,
-  .sidebar__theme-toggle span,
+  .sidebar__theme-toggle span {
+    display: inline !important;
+  }
+
   .sidebar__divider {
-    display: none;
+    display: block !important;
   }
 }

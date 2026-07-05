@@ -105,15 +105,7 @@ export default function AnalyticsPage() {
         />
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
-          lg: "3fr 2fr",
-          gap: "var(--space-6)",
-        }}
-        className="analytics-grid"
-      >
+      <div className="analytics-grid grid-responsive-3-2">
         {/* Department Breakdown */}
         <Card className="hover-lift" style={{ animationDelay: "300ms" }}>
           <CardHeader

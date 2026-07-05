@@ -181,15 +181,7 @@ export default function EmployeeProjectsPage() {
         </p>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
-          lg: "2fr 1fr",
-          gap: "var(--space-6)",
-        }}
-        className="analytics-grid"
-      >
+      <div className="analytics-grid grid-responsive-2-1">
         {/* Active Task / Workspace */}
         <div
           style={{
