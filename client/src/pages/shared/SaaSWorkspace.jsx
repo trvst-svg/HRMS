@@ -95,7 +95,13 @@ export default function SaaSWorkspace() {
         getShifts(),
       ];
 
-      if (role === "admin" || role === "manager") {
+      const isManager =
+        role === "admin" ||
+        role === "manager" ||
+        role === "project_manager" ||
+        role === "department_head";
+
+      if (isManager) {
         promises.push(getEmployees());
         promises.push(getJobApplications());
       }
@@ -106,7 +112,7 @@ export default function SaaSWorkspace() {
       setJobs(results[2].data.data || []);
       setShifts(results[3].data.data || []);
 
-      if (role === "admin" || role === "manager") {
+      if (isManager) {
         setEmployees(results[4].data.data || []);
         setApplications(results[5].data.data || []);
       }

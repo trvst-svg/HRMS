@@ -26,7 +26,10 @@ export default function AdminDashboardPage() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const isManager = role === "manager";
+  const isManager =
+    role === "manager" ||
+    role === "project_manager" ||
+    role === "department_head";
 
   const load = async () => {
     setLoading(true);
