@@ -8,18 +8,14 @@
   overflow: hidden;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-border-strong);
-  box-shadow: var(--shadow-lg), var(--shadow-glow-brand);
-}
-
 .card--hover:hover {
   transform: translateY(-4px);
+  border-color: var(--color-border-strong);
   box-shadow: var(--shadow-xl);
 }
 
 .card--glow:hover {
+  border-color: var(--color-border-strong);
   box-shadow: var(--shadow-xl), var(--shadow-glow-brand);
 }
 
@@ -39,4 +35,19 @@
 
 .card__content {
   padding: var(--space-5) var(--space-6);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+  .card--hover:hover {
+    transform: none;
+  }
+
+  .card__header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .card__content {
+    padding: var(--space-3) var(--space-4);
+  }
 }

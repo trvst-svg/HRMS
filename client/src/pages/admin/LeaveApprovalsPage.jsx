@@ -92,24 +92,10 @@ export default function LeaveApprovalsPage() {
 
   return (
     <div className="animate-fade-in">
-      <h1
-        style={{
-          fontSize: "var(--font-size-2xl)",
-          fontWeight: 700,
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        Leave Approvals
-      </h1>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "var(--space-4)",
-          marginBottom: "var(--space-4)",
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="page-header">
+        <h1 className="page-title">Leave Approvals</h1>
+      </div>
+      <div className="page-filters">
         <Tabs
           tabs={[
             { value: "leave", label: "Leave", icon: Calendar },
@@ -121,7 +107,6 @@ export default function LeaveApprovalsPage() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          style={{ width: 160 }}
         >
           <option value="">All Status</option>
           <option value="Pending">Pending</option>

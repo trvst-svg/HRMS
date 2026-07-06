@@ -66,15 +66,8 @@ export default function DepartmentsPage() {
 
   return (
     <div className="animate-fade-in">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: 700 }}>
+      <div className="page-header">
+        <h1 className="page-title">
           Departments
         </h1>
         <Button icon={Plus} onClick={() => setShow(true)}>

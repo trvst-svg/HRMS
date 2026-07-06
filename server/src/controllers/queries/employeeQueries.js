@@ -140,7 +140,28 @@ async function getEmployeeDashboardSummary(req, res) {
         }, 0),
     );
 
+    // Check if today is a holiday
+    const holidayCheck = await db.query(
+      "SELECT name FROM holidays WHERE date = $1 LIMIT 1",
+      [startOfToday],
+    );
+    const isTodayHoliday = holidayCheck.rows.length > 0;
+    const holidayName = isTodayHoliday ? holidayCheck.rows[0].name : "";
+
+    // Check if today is a weekend off day
+    const offDaysEnv = String(process.env.WEEKLY_OFF_DAYS || "saturday").toLowerCase();
+    const offDays = [];
+    if (offDaysEnv.includes("saturday")) offDays.push(6);
+    if (offDaysEnv.includes("sunday")) offDays.push(0);
+    const isTodayWeekend = offDays.includes(startOfToday.getDay());
+
     let todayStatus = "Not Checked In";
+    if (isTodayHoliday) {
+      todayStatus = `Holiday: ${holidayName}`;
+    } else if (isTodayWeekend) {
+      todayStatus = "Weekend";
+    }
+
     let checkTime = null;
     if (todayRecord?.status === "Leave") {
       todayStatus = "Approved Leave";
@@ -244,6 +265,7 @@ async function getMyProfile(req, res) {
           "",
         email: employee.email || req.user.email,
         role: req.user.role,
+        avatar: req.user.avatar || null,
         employeeId: employee.employee_id || "N/A",
         department: await getNormalizedDepartmentName(employee.department),
         designation: employee.designation || "N/A",

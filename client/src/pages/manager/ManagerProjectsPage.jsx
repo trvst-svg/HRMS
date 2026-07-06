@@ -458,13 +458,7 @@ export default function ManagerProjectsPage() {
                   />
                 </div>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "var(--space-3)",
-                  }}
-                >
+                <div className="form-grid">
                   <div>
                     <label
                       style={{
@@ -516,13 +510,7 @@ export default function ManagerProjectsPage() {
                   </div>
                 </div>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "var(--space-3)",
-                  }}
-                >
+                <div className="form-grid">
                   <div>
                     <label
                       style={{

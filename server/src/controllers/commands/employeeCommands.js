@@ -58,6 +58,14 @@ async function updateMyProfile(req, res) {
       ]);
     }
 
+    if (req.file) {
+      const avatarPath = `/uploads/avatars/${req.file.filename}`;
+      await db.query("UPDATE users SET avatar = $1 WHERE id = $2", [
+        avatarPath,
+        req.user.id,
+      ]);
+    }
+
     return res.json({ message: "Profile updated successfully" });
   } catch (err) {
     console.error("updateMyProfile error:", err);

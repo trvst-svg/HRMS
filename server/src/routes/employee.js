@@ -21,6 +21,8 @@ const { employeePayrollRouter } = require("./payrollRoutes");
 const { employeeHolidayRouter } = require("./holidayRoutes");
 const { selfDocumentRouter } = require("./documentRoutes");
 
+const { uploadAvatar } = require("../middleware/upload");
+
 // All employee routes need auth + employee role.
 router.use(protect);
 router.use(requireRole("employee"));
@@ -31,7 +33,7 @@ router.get("/ping", (req, res) => {
 
 router.get("/dashboard-summary", getEmployeeDashboardSummary);
 router.get("/profile", getMyProfile);
-router.put("/profile", updateMyProfile);
+router.put("/profile", uploadAvatar, updateMyProfile);
 router.post("/change-password/request-otp", requestChangePasswordOtp);
 router.patch("/change-password", changeMyPassword);
 

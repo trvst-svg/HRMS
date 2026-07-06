@@ -146,17 +146,8 @@ export default function EmployeesPage() {
 
   return (
     <div className="animate-fade-in">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: 700 }}>
-          Employees
-        </h1>
+      <div className="page-header">
+        <h1 className="page-title">Employees</h1>
         {role === "admin" && (
           <Button
             icon={UserPlus}
@@ -169,15 +160,8 @@ export default function EmployeesPage() {
 
       <Card>
         <CardContent>
-          <div
-            style={{
-              display: "flex",
-              gap: "var(--space-3)",
-              flexWrap: "wrap",
-              marginBottom: "var(--space-4)",
-            }}
-          >
-            <div style={{ position: "relative", flex: "1 1 240px" }}>
+          <div className="page-filters">
+            <div className="page-filters__search">
               <Search
                 size={16}
                 style={{
@@ -186,6 +170,7 @@ export default function EmployeesPage() {
                   top: "50%",
                   transform: "translateY(-50%)",
                   color: "var(--color-text-muted)",
+                  pointerEvents: "none",
                 }}
               />
               <input
@@ -198,7 +183,6 @@ export default function EmployeesPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              style={{ flex: "0 1 160px" }}
             >
               <option value="">All Status</option>
               <option value="active">Active</option>
@@ -208,7 +192,6 @@ export default function EmployeesPage() {
             <select
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
-              style={{ flex: "0 1 160px" }}
             >
               <option value="">All Roles</option>
               <option value="employee">Employee</option>
@@ -217,7 +200,6 @@ export default function EmployeesPage() {
             <select
               value={deptFilter}
               onChange={(e) => setDeptFilter(e.target.value)}
-              style={{ flex: "0 1 180px" }}
             >
               <option value="">All Departments</option>
               {departments.map((d) => (

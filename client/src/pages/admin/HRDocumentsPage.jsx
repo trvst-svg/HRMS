@@ -95,27 +95,22 @@ export default function HRDocumentsPage() {
 
   return (
     <div className="animate-fade-in">
-      <h1
-        style={{
-          fontSize: "var(--font-size-2xl)",
-          fontWeight: 700,
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        Document Requests
-      </h1>
+      <div className="page-header">
+        <h1 className="page-title">Document Requests</h1>
+      </div>
       <Card>
         <CardContent>
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            style={{ width: 180, marginBottom: "var(--space-4)" }}
-          >
-            <option value="">All Status</option>
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-          </select>
+          <div className="page-filters">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <option value="">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
         </CardContent>
         {loading ? (
           <PageLoader />

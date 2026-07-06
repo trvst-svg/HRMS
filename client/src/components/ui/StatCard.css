@@ -77,3 +77,29 @@
   color: var(--color-text-secondary);
   margin-top: 2px;
 }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+  .stat-card {
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .stat-card:hover {
+    transform: none;
+  }
+
+  .stat-card__icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+  }
+
+  .stat-card__value {
+    font-size: var(--font-size-xl);
+  }
+
+  .stat-card__label {
+    font-size: 0.6875rem;
+  }
+}

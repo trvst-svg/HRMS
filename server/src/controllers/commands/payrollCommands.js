@@ -31,34 +31,62 @@ async function getEmployeeOr404(employeeId) {
   return employee;
 }
 
-function getMonthDateRange(month) {
-  const safeMonth = String(month || "").trim();
-  if (!/^\d{4}-\d{2}$/.test(safeMonth)) {
-    const now = new Date();
-    return {
-      month: now.toISOString().slice(0, 7),
-      start: new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0),
-      end: new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0, 0),
-      daysInMonth: new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(),
-    };
-  }
+const NepaliDate = require("nepali-date-converter").default || require("nepali-date-converter");
 
-  const [yearStr, monthStr] = safeMonth.split("-");
-  const year = Number(yearStr);
-  const monthIndex = Number(monthStr) - 1;
-  const start = new Date(year, monthIndex, 1, 0, 0, 0, 0);
-  const end = new Date(year, monthIndex + 1, 1, 0, 0, 0, 0);
-  const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
-
-  return { month: safeMonth, start, end, daysInMonth };
+function getWeeklyOffDays() {
+  const config = String(process.env.WEEKLY_OFF_DAYS || "saturday").toLowerCase();
+  const days = [];
+  if (config.includes("saturday")) days.push(6); // Saturday
+  if (config.includes("sunday")) days.push(0); // Sunday
+  return days;
 }
 
-function countWorkingDays(start, end) {
+function getMonthDateRange(month) {
+  const safeMonth = String(month || "").trim();
+  let year, monthIndex;
+
+  if (!/^\d{4}-\d{2}$/.test(safeMonth)) {
+    const nepaliNow = new NepaliDate();
+    year = nepaliNow.getYear();
+    monthIndex = nepaliNow.getMonth(); // 0-11
+  } else {
+    const [yearStr, monthStr] = safeMonth.split("-");
+    year = Number(yearStr);
+    monthIndex = Number(monthStr) - 1;
+  }
+
+  const startJs = new NepaliDate(year, monthIndex, 1).toJsDate();
+  const nextMonthIndex = monthIndex === 11 ? 0 : monthIndex + 1;
+  const nextYear = monthIndex === 11 ? year + 1 : year;
+  const endJs = new NepaliDate(nextYear, nextMonthIndex, 1).toJsDate();
+  const daysInMonth = Math.round((endJs - startJs) / (24 * 60 * 60 * 1000));
+
+  const monthStr = String(monthIndex + 1).padStart(2, "0");
+  return {
+    month: `${year}-${monthStr}`,
+    start: startJs,
+    end: endJs,
+    daysInMonth,
+  };
+}
+
+function toLocalYMD(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function countWorkingDays(start, end, holidayDates = []) {
+  const offDays = getWeeklyOffDays();
   let count = 0;
   const cursor = new Date(start);
   while (cursor < end) {
     const day = cursor.getDay();
-    if (day !== 0 && day !== 6) count += 1;
+    const dateStr = toLocalYMD(cursor);
+    if (!offDays.includes(day) && !holidayDates.includes(dateStr)) {
+      count += 1;
+    }
     cursor.setDate(cursor.getDate() + 1);
   }
   return count;
@@ -66,7 +94,14 @@ function countWorkingDays(start, end) {
 
 async function getAttendanceSummary(employeeId, month) {
   const { start, end, daysInMonth } = getMonthDateRange(month);
-  const workingDaysInMonth = countWorkingDays(start, end);
+
+  const holidayResult = await db.query(
+    "SELECT date FROM holidays WHERE date >= $1 AND date < $2",
+    [start, end]
+  );
+  const holidayDates = holidayResult.rows.map(r => toLocalYMD(new Date(r.date)));
+
+  const workingDaysInMonth = countWorkingDays(start, end, holidayDates);
 
   const result = await db.query(
     "SELECT status, COUNT(*)::int as count FROM attendance WHERE employee_id = $1 AND date >= $2 AND date < $3 GROUP BY status",
@@ -118,8 +153,28 @@ async function buildPayrollFromEmployee(
   const annualSalaryFromProfile =
     Number(employee.annualSalary || 0) ||
     Math.round(Number(employee.baseSalary || 0) * 12);
+
+  const baseGrossPay = Math.round(annualSalaryFromProfile / 12);
+  const attendance = await getAttendanceSummary(employee.id, month);
+
+  const perDaySalary =
+    attendance.daysInMonth > 0
+      ? Math.round(baseGrossPay / attendance.daysInMonth)
+      : 0;
+
+  let attendanceDeduction = Math.max(
+    0,
+    Math.round(
+      perDaySalary *
+        (attendance.absentDays + attendance.halfDayPresentDays * 0.5),
+    ),
+  );
+  attendanceDeduction = Math.min(baseGrossPay, attendanceDeduction);
+
+  const actualGrossPay = Math.max(0, baseGrossPay - attendanceDeduction);
+
   const computed = calculateMonthlyPayrollFromAnnual({
-    annualSalary: annualSalaryFromProfile,
+    annualSalary: actualGrossPay * 12,
     filingStatus: filingStatus || employee.filingStatus || "unmarried",
     otherDeductions,
     gender: employee.gender || "male",
@@ -130,36 +185,20 @@ async function buildPayrollFromEmployee(
     includeFestivalBonus,
     reimbursement,
   });
-  const attendance = await getAttendanceSummary(employee.id, month);
-
-  const perDaySalary =
-    attendance.daysInMonth > 0
-      ? Math.round(computed.grossPay / attendance.daysInMonth)
-      : 0;
-  const attendanceDeduction = Math.max(
-    0,
-    Math.round(
-      perDaySalary *
-        (attendance.absentDays + attendance.halfDayPresentDays * 0.5),
-    ),
-  );
 
   const otPay = computed.otPay || 0;
   const festivalBonus = computed.festivalBonus || 0;
   const totalDeductions = computed.deductions + attendanceDeduction;
-  const netPay = Math.max(
-    0,
-    computed.grossPay + otPay + festivalBonus + reimbursement - totalDeductions,
-  );
+  const netPay = computed.netPay;
 
   const row = {
     employee_id: employee.id,
     employee: employee.id,
     month,
-    annualSalary: computed.annualSalary,
+    annualSalary: annualSalaryFromProfile,
     basic: computed.basic,
     allowance: computed.allowance,
-    grossPay: computed.grossPay,
+    grossPay: baseGrossPay,
     filingStatus: computed.filingStatus,
     taxDeduction: computed.taxDeduction,
     otherDeductions: computed.otherDeductions,

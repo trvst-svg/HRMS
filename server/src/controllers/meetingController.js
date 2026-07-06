@@ -16,11 +16,28 @@ async function createMeeting(req, res) {
     if (!title || !scheduledAt) {
       return res
         .status(400)
-        .json({ message: "Title and scheduled time are required." });
+        .json({ message: "Title and scheduled date/time are required." });
+    }
+
+    const scheduledDate = new Date(scheduledAt);
+    if (isNaN(scheduledDate.getTime())) {
+      return res.status(400).json({ message: "Invalid scheduled date/time." });
+    }
+    if (scheduledDate < new Date()) {
+      return res
+        .status(400)
+        .json({ message: "Scheduled date/time must be in the future." });
     }
 
     const empId = employeeId ? parseInt(employeeId, 10) : null;
     const condBy = conductedBy ? parseInt(conductedBy, 10) : null;
+
+    if (employeeId && isNaN(empId)) {
+      return res.status(400).json({ message: "Invalid employee ID." });
+    }
+    if (conductedBy && isNaN(condBy)) {
+      return res.status(400).json({ message: "Invalid host ID." });
+    }
 
     const result = await db.query(
       `INSERT INTO hr_meetings (title, type, employee_id, candidate_name, conducted_by, scheduled_at, status, notes)
@@ -32,7 +49,7 @@ async function createMeeting(req, res) {
         empId,
         candidateName,
         condBy,
-        new Date(scheduledAt),
+        scheduledDate,
         notes,
       ],
     );
@@ -124,7 +141,16 @@ async function updateMeeting(req, res) {
     }
 
     if (scheduledAt !== undefined) {
-      params.push(new Date(scheduledAt));
+      const scheduledDate = new Date(scheduledAt);
+      if (isNaN(scheduledDate.getTime())) {
+        return res.status(400).json({ message: "Invalid scheduled date/time." });
+      }
+      if (scheduledDate < new Date()) {
+        return res
+          .status(400)
+          .json({ message: "Scheduled date/time must be in the future." });
+      }
+      params.push(scheduledDate);
       queryStr += `scheduled_at = $${params.length}, `;
     }
 

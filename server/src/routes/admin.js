@@ -32,6 +32,8 @@ const {
   changeMyPassword,
 } = require("../controllers/commands/employeeCommands");
 
+const { uploadAvatar } = require("../middleware/upload");
+
 // Simple health check.
 router.get("/ping", ping);
 
@@ -45,7 +47,7 @@ router.get("/analytics", analytics);
 
 // Admin Profile and Actions
 router.get("/profile", getMyProfile);
-router.put("/profile", updateMyProfile);
+router.put("/profile", uploadAvatar, updateMyProfile);
 router.post("/change-password/request-otp", requestChangePasswordOtp);
 router.patch("/change-password", changeMyPassword);
 

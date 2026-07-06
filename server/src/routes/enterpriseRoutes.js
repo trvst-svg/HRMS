@@ -4,6 +4,7 @@ const {
   protect,
   requireRole,
   requireHRorAdmin,
+  requireManagerOrHRorAdmin,
 } = require("../middleware/auth");
 
 const expenseCtrl = require("../controllers/expenseController");
@@ -56,18 +57,18 @@ router.patch(
 );
 
 // HR Meetings & Interviews Scheduler
-router.post("/meetings", protect, requireHRorAdmin, meetingCtrl.createMeeting);
+router.post("/meetings", protect, requireManagerOrHRorAdmin, meetingCtrl.createMeeting);
 router.get("/meetings", protect, meetingCtrl.getMeetings);
 router.patch(
   "/meetings/:id",
   protect,
-  requireHRorAdmin,
+  requireManagerOrHRorAdmin,
   meetingCtrl.updateMeeting,
 );
 router.get(
   "/hr-employees",
   protect,
-  requireHRorAdmin,
+  requireManagerOrHRorAdmin,
   meetingCtrl.getHrEmployees,
 );
 

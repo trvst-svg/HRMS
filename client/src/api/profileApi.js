@@ -8,8 +8,12 @@ const getBase = () => {
 
 export const getMyProfile = () => api.get(`${getBase()}/profile`);
 
-export const updateMyProfile = (payload) =>
-  api.put(`${getBase()}/profile`, payload);
+export const updateMyProfile = (payload) => {
+  const headers = payload instanceof FormData
+    ? { "Content-Type": "multipart/form-data" }
+    : { "Content-Type": "application/json" };
+  return api.put(`${getBase()}/profile`, payload, { headers });
+};
 
 export const changeMyPassword = (payload) =>
   api.patch(`${getBase()}/change-password`, payload);

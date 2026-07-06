@@ -30,6 +30,7 @@ export default function RegisterEmployeePage() {
   });
   const [loading, setLoading] = useState(false);
   const [departments, setDepartments] = useState([]);
+  const [avatarFile, setAvatarFile] = useState(null);
 
   useEffect(() => {
     getDepartments()
@@ -45,12 +46,15 @@ export default function RegisterEmployeePage() {
       return toast.error("Name, email, and password are required.");
     setLoading(true);
     try {
-      await createEmployee({
-        ...form,
-        annualSalary: Number(form.annualSalary) || 0,
-        citContribution: Number(form.citContribution) || 0,
-        insurancePremium: Number(form.insurancePremium) || 0,
+      const formData = new FormData();
+      Object.keys(form).forEach((key) => {
+        formData.append(key, form[key]);
       });
+      if (avatarFile) {
+        formData.append("avatar", avatarFile);
+      }
+
+      await createEmployee(formData);
       toast.success("Employee registered successfully!");
       navigate("/employees");
     } catch (err) {
@@ -111,13 +115,7 @@ export default function RegisterEmployeePage() {
                 required
               />
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Phone</label>
                 <input
@@ -136,13 +134,7 @@ export default function RegisterEmployeePage() {
                 </select>
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Department</label>
                 <select value={form.department} onChange={set("department")}>
@@ -163,13 +155,7 @@ export default function RegisterEmployeePage() {
                 />
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Annual Salary (NPR)</label>
                 <input
@@ -190,13 +176,7 @@ export default function RegisterEmployeePage() {
                 </select>
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Gender</label>
                 <select value={form.gender} onChange={set("gender")}>
@@ -235,13 +215,7 @@ export default function RegisterEmployeePage() {
                 </label>
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Monthly CIT Contribution (NPR)</label>
                 <input
@@ -260,6 +234,14 @@ export default function RegisterEmployeePage() {
                   placeholder="0"
                 />
               </div>
+            </div>
+            <div className="form-group" style={{ marginBottom: "var(--space-4)" }}>
+              <label>Profile Picture (Optional)</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setAvatarFile(e.target.files[0])}
+              />
             </div>
             <Button type="submit" icon={UserPlus} loading={loading} size="lg">
               Register Employee

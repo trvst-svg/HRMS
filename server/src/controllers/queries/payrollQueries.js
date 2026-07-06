@@ -1,17 +1,46 @@
 const db = require("../../config/db");
 const { getOrCreateEmployeeForUser } = require("../queries/employeeQueries");
 const {
+  FISCAL_YEAR,
   NEPAL_TAX_SLABS,
   renderPayslipHtml,
 } = require("../../services/payrollService");
 const { htmlToPdfBuffer } = require("../../services/htmlPdfService");
 
 async function getTaxConfig(req, res) {
+  // Build cumulative-threshold view for display purposes
+  function buildDisplaySlabs(slabs) {
+    let cumulative = 0;
+    return slabs.map((s) => {
+      const from = cumulative + 1;
+      cumulative += s.upto === Number.MAX_SAFE_INTEGER ? 0 : s.upto;
+      const to = s.upto === Number.MAX_SAFE_INTEGER ? null : cumulative;
+      return {
+        from: from === 1 ? 0 : from,
+        to,
+        rate: s.rate,
+        label: to ? `NPR ${from.toLocaleString("en-NP")} – ${to.toLocaleString("en-NP")}` : `Above NPR ${(from - 1).toLocaleString("en-NP")}`,
+      };
+    });
+  }
+
   return res.json({
     data: {
       editable: false,
+      fiscalYear: FISCAL_YEAR,
       slabs: NEPAL_TAX_SLABS,
-      note: "Nepali tax slabs are fixed by system.",
+      display: {
+        unmarried: buildDisplaySlabs(NEPAL_TAX_SLABS.unmarried),
+        married: buildDisplaySlabs(NEPAL_TAX_SLABS.married),
+      },
+      provisions: [
+        "1% on the first slab is Social Security Tax (SST); exempt for SSF contributors.",
+        "Married couples enjoy a higher first-slab threshold (NPR 600,000 vs 500,000).",
+        "Resident female employees (sole income from employment) get a 10% tax rebate.",
+        "Retirement deduction: SSF cap NPR 500,000; EPF/CIT cap NPR 300,000 (or 1/3 of gross).",
+        "Life insurance premium deduction capped at NPR 40,000/year.",
+      ],
+      note: `Nepali tax slabs are fixed per FY ${FISCAL_YEAR}. Contact admin to update.`,
     },
   });
 }

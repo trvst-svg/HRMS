@@ -22,7 +22,7 @@ const protect = async (req, res, next) => {
     );
 
     const { rows } = await db.query(
-      "SELECT id, name, email, role, password FROM users WHERE id = $1",
+      "SELECT id, name, email, role, avatar, password FROM users WHERE id = $1",
       [decoded.id],
     );
     const user = rows[0];
@@ -80,8 +80,38 @@ const requireHRorAdmin = async (req, res, next) => {
   }
 };
 
+const requireManagerOrHRorAdmin = async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res
+        .status(401)
+        .json({ message: "No token, authorization denied" });
+    }
+    if (req.user.role === "admin" || req.user.role === "manager") {
+      return next();
+    }
+
+    const { rows } = await db.query(
+      "SELECT department FROM employees WHERE user_id = $1 LIMIT 1",
+      [req.user.id],
+    );
+    const dept = rows[0]?.department;
+    if (dept && String(dept).trim().toUpperCase() === "HR") {
+      return next();
+    }
+
+    return res
+      .status(403)
+      .json({ message: "Forbidden: Admin, Manager or HR access required" });
+  } catch (err) {
+    console.error("requireManagerOrHRorAdmin error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   protect,
   requireRole,
   requireHRorAdmin,
+  requireManagerOrHRorAdmin,
 };

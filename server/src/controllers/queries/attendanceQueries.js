@@ -65,15 +65,37 @@ async function getAdminAttendance(req, res) {
         byEmployee.set(String(rec.employee_id), rec);
       });
 
+      // Check if this date is a holiday
+      const holidayResult = await db.query(
+        "SELECT name FROM holidays WHERE date = $1 LIMIT 1",
+        [fromDate],
+      );
+      const isHoliday = holidayResult.rows.length > 0;
+      const holidayName = isHoliday ? holidayResult.rows[0].name : "";
+
+      // Check if it is a weekly off day
+      const offDaysEnv = String(process.env.WEEKLY_OFF_DAYS || "saturday").toLowerCase();
+      const offDays = [];
+      if (offDaysEnv.includes("saturday")) offDays.push(6);
+      if (offDaysEnv.includes("sunday")) offDays.push(0);
+      const isWeekend = offDays.includes(fromDate.getDay());
+
       const rows = employees.map((emp) => {
         const rec = byEmployee.get(String(emp.id));
+        let defaultStatus = "Absent";
+        if (isHoliday) {
+          defaultStatus = `Holiday: ${holidayName}`;
+        } else if (isWeekend) {
+          defaultStatus = "Weekend";
+        }
+
         return {
           _id: rec?.id || `absent-${emp.id}-${fromDate.toISOString()}`,
           id: rec?.id || null,
           date: fromDate,
           checkIn: rec?.check_in || null,
           checkOut: rec?.check_out || null,
-          status: rec?.status || "Absent",
+          status: rec?.status || defaultStatus,
           employee: {
             _id: emp.id,
             id: emp.id,

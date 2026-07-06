@@ -253,10 +253,8 @@ export default function EmployeeProjectsPage() {
                 )}
 
                 <div
+                  className="form-grid"
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "var(--space-4)",
                     fontSize: "var(--font-size-sm)",
                     borderTop: "1px solid var(--color-border)",
                     borderBottom: "1px solid var(--color-border)",
@@ -359,13 +357,7 @@ export default function EmployeeProjectsPage() {
                 )}
 
                 {/* Actions Panel */}
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "var(--space-4)",
-                  }}
-                >
+                <div className="form-grid">
                   {/* Extension form */}
                   <form
                     onSubmit={handleExtensionSubmit}

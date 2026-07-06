@@ -118,38 +118,21 @@ export default function PayrollPage() {
 
   return (
     <div className="animate-fade-in">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: 700 }}>
-          Payroll
-        </h1>
+      <div className="page-header">
+        <h1 className="page-title">Payroll</h1>
         <Button icon={Plus} onClick={openCreate}>
           Generate Payroll
         </Button>
       </div>
       <Card>
         <CardContent>
-          <div
-            style={{
-              display: "flex",
-              gap: "var(--space-3)",
-              flexWrap: "wrap",
-              marginBottom: "var(--space-4)",
-            }}
-          >
+          <div className="page-filters">
             <input
               type="month"
               value={monthFilter}
               onChange={(e) => setMonthFilter(e.target.value)}
-              style={{ flex: "0 1 180px" }}
             />
-            <div style={{ position: "relative", flex: "1 1 200px" }}>
+            <div className="page-filters__search">
               <Search
                 size={16}
                 style={{
@@ -158,6 +141,7 @@ export default function PayrollPage() {
                   top: "50%",
                   transform: "translateY(-50%)",
                   color: "var(--color-text-muted)",
+                  pointerEvents: "none",
                 }}
               />
               <input

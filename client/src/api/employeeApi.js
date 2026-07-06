@@ -5,7 +5,12 @@ const getBase = () => {
   return role === "manager" ? "/manager" : "/admin";
 };
 
-export const createEmployee = (data) => api.post("/admin/employees", data);
+export const createEmployee = (data) => {
+  const headers = data instanceof FormData
+    ? { "Content-Type": "multipart/form-data" }
+    : { "Content-Type": "application/json" };
+  return api.post("/admin/employees", data, { headers });
+};
 
 export const getEmployees = (params = {}) =>
   api.get(`${getBase()}/employees`, {

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { getAvatar } from "../../utils/avatar";
+import { getMyProfile } from "../../api/profileApi";
 import { getInitials } from "../../utils/helpers";
 import {
   LayoutDashboard,
@@ -100,6 +101,15 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
   const [theme, setTheme] = useState(
     localStorage.getItem("hrms-theme") || "light",
   );
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -121,7 +131,18 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
   const initials = getInitials(email?.split("@")[0] || "User");
 
   useEffect(() => {
-    const load = () => setAvatarUrl(getAvatar(role, email));
+    const load = async () => {
+      try {
+        const res = await getMyProfile();
+        if (res.data?.data?.avatar) {
+          setAvatarUrl(res.data.data.avatar);
+        } else {
+          setAvatarUrl(null);
+        }
+      } catch (err) {
+        console.error("Failed to load profile avatar for sidebar:", err);
+      }
+    };
     load();
     window.addEventListener("hrms-avatar-updated", load);
     return () => window.removeEventListener("hrms-avatar-updated", load);
@@ -152,7 +173,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
         <button
           className="sidebar__toggle"
           onClick={() => {
-            if (window.innerWidth <= 768) {
+            if (isMobile) {
               setMobileOpen && setMobileOpen(false);
             } else {
               setCollapsed(!collapsed);
@@ -160,7 +181,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
           }}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          {window.innerWidth <= 768 ? (
+          {isMobile ? (
             <X size={18} />
           ) : collapsed ? (
             <ChevronRight size={16} />

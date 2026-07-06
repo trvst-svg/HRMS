@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+const path = require("path");
 const { connectDB } = require("./config/db");
 
 const authRoute = require("./routes/auth");
@@ -17,6 +18,9 @@ const sanitize = require("./middleware/sanitize");
 const { apiLimiter } = require("./middleware/rateLimiter");
 
 const app = express();
+
+// Trust proxy headers (needed for express-rate-limit when behind ngrok or Vite dev proxy)
+app.set("trust proxy", 1);
 
 // Connect DB
 connectDB();
@@ -46,6 +50,7 @@ app.use(
 // ─────────────────────────────────────────────────────────────────────────────
 app.use(express.json({ limit: "50kb" }));
 app.use(express.urlencoded({ extended: true, limit: "50kb" }));
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 3. Disable caching for all API responses + etag (prevent 304 caching issues)

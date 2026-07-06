@@ -262,13 +262,7 @@ export default function ExpensesPage() {
               required
             />
           </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "var(--space-4)",
-            }}
-          >
+          <div className="form-grid">
             <div className="form-group">
               <label>Amount (NPR) *</label>
               <input

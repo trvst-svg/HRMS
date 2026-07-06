@@ -95,17 +95,8 @@ export default function HolidaysPage() {
 
   return (
     <div className="animate-fade-in">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: 700 }}>
-          Holidays
-        </h1>
+      <div className="page-header">
+        <h1 className="page-title">Holidays</h1>
         {role === "admin" && (
           <Button icon={Plus} onClick={() => setShow(true)}>
             Add Holiday
@@ -140,13 +131,7 @@ export default function HolidaysPage() {
               required
             />
           </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "var(--space-4)",
-            }}
-          >
+          <div className="form-grid">
             <div className="form-group">
               <label>Start Date</label>
               <input

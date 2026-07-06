@@ -64,6 +64,7 @@ export default function MeetingsPage() {
 
   const isHR =
     role === "admin" ||
+    role === "manager" ||
     (profile?.department &&
       String(profile.department).trim().toUpperCase() === "HR");
 
@@ -82,6 +83,7 @@ export default function MeetingsPage() {
       // 3. Load HR employees and All employees if user is HR/Admin
       const userIsHR =
         role === "admin" ||
+        role === "manager" ||
         (userProfile?.department &&
           String(userProfile.department).trim().toUpperCase() === "HR");
       if (userIsHR) {
@@ -107,6 +109,10 @@ export default function MeetingsPage() {
     e.preventDefault();
     if (!createForm.title || !createForm.scheduledAt) {
       return toast.error("Title and Scheduled Date/Time are required.");
+    }
+    const scheduledDate = new Date(createForm.scheduledAt);
+    if (scheduledDate < new Date()) {
+      return toast.error("Scheduled date/time must be in the future.");
     }
     setCreating(true);
     try {
@@ -467,13 +473,7 @@ export default function MeetingsPage() {
               gap: "var(--space-4)",
             }}
           >
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Meeting Title *</label>
                 <input
@@ -501,13 +501,7 @@ export default function MeetingsPage() {
               </div>
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Internal Employee (For Appraisal/Onboarding)</label>
                 <select
@@ -543,13 +537,7 @@ export default function MeetingsPage() {
               </div>
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Scheduled Date & Time *</label>
                 <input

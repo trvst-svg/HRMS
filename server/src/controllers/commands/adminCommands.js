@@ -162,9 +162,11 @@ async function createEmployee(req, res) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    const avatarPath = req.file ? `/uploads/avatars/${req.file.filename}` : null;
+
     const userResult = await db.query(
-      "INSERT INTO users (name, email, password, role, otp_required_for_login) VALUES ($1, $2, $3, $4, false) RETURNING *",
-      [name, normalizedEmail, hashedPassword, normalizedRole],
+      "INSERT INTO users (name, email, password, role, avatar, otp_required_for_login) VALUES ($1, $2, $3, $4, $5, false) RETURNING *",
+      [name, normalizedEmail, hashedPassword, normalizedRole, avatarPath],
     );
     const user = userResult.rows[0];
 
@@ -438,12 +440,19 @@ async function deleteEmployee(req, res) {
     if (isNaN(idInt))
       return res.status(400).json({ message: "Invalid employee id" });
 
-    const empResult = await db.query("SELECT * FROM employees WHERE id = $1", [
-      idInt,
-    ]);
+    const empResult = await db.query(
+      "SELECT e.*, u.role FROM employees e JOIN users u ON e.user_id = u.id WHERE e.id = $1",
+      [idInt]
+    );
     const employee = empResult.rows[0];
     if (!employee)
       return res.status(404).json({ message: "Employee not found" });
+
+    if (employee.role === "admin") {
+      return res
+        .status(403)
+        .json({ message: "Action not allowed. Admin accounts cannot be deleted or laid off." });
+    }
 
     const action = String(req.body?.action || req.query?.action || "")
       .trim()

@@ -90,15 +90,8 @@ export default function EmployeeProfilePage() {
 
   return (
     <div className="animate-fade-in">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: 700 }}>
+      <div className="page-header">
+        <h1 className="page-title">
           {data.name}
         </h1>
         <Button icon={Edit} onClick={openEdit}>
@@ -198,13 +191,7 @@ export default function EmployeeProfilePage() {
               gap: "var(--space-4)",
             }}
           >
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Full Name *</label>
                 <input
@@ -227,13 +214,7 @@ export default function EmployeeProfilePage() {
                 />
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Phone</label>
                 <input
@@ -258,13 +239,7 @@ export default function EmployeeProfilePage() {
                 </select>
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Department</label>
                 <select
@@ -291,13 +266,7 @@ export default function EmployeeProfilePage() {
                 />
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Status</label>
                 <select
@@ -325,13 +294,7 @@ export default function EmployeeProfilePage() {
                 </select>
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Annual Salary (NPR)</label>
                 <input
@@ -355,13 +318,7 @@ export default function EmployeeProfilePage() {
                 </select>
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div
                 className="form-group"
                 style={{
@@ -408,13 +365,7 @@ export default function EmployeeProfilePage() {
                 />
               </div>
             </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="form-grid">
               <div className="form-group">
                 <label>Annual Life Insurance Premium (NPR)</label>
                 <input

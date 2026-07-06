@@ -8,8 +8,17 @@ export default function Table({
   pagination,
   onPageChange,
 }) {
+  // Separate action columns from data columns for the mobile card layout
+  const dataColumns = columns.filter(
+    (col) => col.key !== "actions" && col.label !== "",
+  );
+  const actionColumn = columns.find(
+    (col) => col.key === "actions" || col.label === "",
+  );
+
   return (
     <div className="table-wrap">
+      {/* ── Desktop: traditional table ── */}
       <div className="table-scroll">
         <table className="table">
           <thead>
@@ -42,6 +51,34 @@ export default function Table({
           </tbody>
         </table>
       </div>
+
+      {/* ── Mobile: card view ── */}
+      <div className="table-cards">
+        {data && data.length > 0 ? (
+          data.map((row, i) => (
+            <div className="table-card" key={row._id || row.id || i}>
+              {dataColumns.map((col) => (
+                <div className="table-card__row" key={col.key}>
+                  <span className="table-card__label">{col.label}</span>
+                  <span className="table-card__value">
+                    {col.render ? col.render(row) : (row[col.key] ?? "—")}
+                  </span>
+                </div>
+              ))}
+              {actionColumn && (
+                <div className="table-card__actions">
+                  {actionColumn.render
+                    ? actionColumn.render(row)
+                    : (row[actionColumn.key] ?? "")}
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="table-cards__empty">{emptyMessage}</div>
+        )}
+      </div>
+
       {pagination && pagination.pages > 1 && (
         <div className="table__pagination">
           <span className="table__page-info">
@@ -69,3 +106,4 @@ export default function Table({
     </div>
   );
 }
+

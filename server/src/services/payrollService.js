@@ -4,23 +4,48 @@
 const fs = require("fs");
 const path = require("path");
 
-// Fixed Nepali tax slabs (admin cannot edit these from UI).
+// ---------------------------------------------------------------------------
+// Nepal Income Tax Slabs — FY 2082/83 (2025/26)
+// Source: Income Tax Act, 2058 (2002), as amended by Finance Act 2082
+// Administered by the Inland Revenue Department (IRD), https://ird.gov.np
+//
+// These are progressive slabs: each rate applies only to the income that
+// falls within that band.  The "upto" value is the WIDTH of each band
+// (not a cumulative threshold).
+//
+// Key provisions reflected in the payroll calculation:
+//   1. Social Security Tax (SST) — The 1% rate on the first slab is the
+//      SST.  If the employee contributes to SSF, this slab is taxed at 0%.
+//   2. Married couples — First slab is NPR 600,000 (vs 500,000 for singles).
+//   3. Female rebate — Resident female employees whose sole income source
+//      is employment get a 10% rebate on total tax liability.
+//   4. Retirement deduction cap — SSF contributors: min(actual, 1/3 gross,
+//      NPR 500,000).  Non-SSF (EPF/CIT): min(actual, 1/3 gross, NPR 300,000).
+//   5. Life insurance premium deduction capped at NPR 40,000/year.
+//   6. Non-residents are taxed at a flat 25% (not handled here; this module
+//      covers resident employees only).
+//
+// Admin cannot edit these from the UI.  To update for a new fiscal year,
+// change the slab table below and bump FISCAL_YEAR.
+// ---------------------------------------------------------------------------
+const FISCAL_YEAR = "2082/83";
+
 const NEPAL_TAX_SLABS = {
   unmarried: [
-    { upto: 500000, rate: 1 },
-    { upto: 200000, rate: 10 },
-    { upto: 300000, rate: 20 },
-    { upto: 1000000, rate: 30 },
-    { upto: 3000000, rate: 36 },
-    { upto: Number.MAX_SAFE_INTEGER, rate: 39 },
+    { upto: 500000, rate: 1 },   // NPR 0 – 500,000        (SST)
+    { upto: 200000, rate: 10 },  // NPR 500,001 – 700,000
+    { upto: 300000, rate: 20 },  // NPR 700,001 – 1,000,000
+    { upto: 1000000, rate: 30 }, // NPR 1,000,001 – 2,000,000
+    { upto: 3000000, rate: 36 }, // NPR 2,000,001 – 5,000,000
+    { upto: Number.MAX_SAFE_INTEGER, rate: 39 }, // Above NPR 5,000,000
   ],
   married: [
-    { upto: 600000, rate: 1 },
-    { upto: 200000, rate: 10 },
-    { upto: 300000, rate: 20 },
-    { upto: 900000, rate: 30 },
-    { upto: 3000000, rate: 36 },
-    { upto: Number.MAX_SAFE_INTEGER, rate: 39 },
+    { upto: 600000, rate: 1 },   // NPR 0 – 600,000        (SST)
+    { upto: 200000, rate: 10 },  // NPR 600,001 – 800,000
+    { upto: 300000, rate: 20 },  // NPR 800,001 – 1,100,000
+    { upto: 900000, rate: 30 },  // NPR 1,100,001 – 2,000,000
+    { upto: 3000000, rate: 36 }, // NPR 2,000,001 – 5,000,000
+    { upto: Number.MAX_SAFE_INTEGER, rate: 39 }, // Above NPR 5,000,000
   ],
 };
 
@@ -35,32 +60,21 @@ function normalizeFilingStatus(v) {
 }
 
 // Walk through the slab table and accumulate tax one slab at a time.
+// Uses the single NEPAL_TAX_SLABS constant so there is only one place to
+// update when rates change for a new fiscal year.
 function calculateAnnualTax(
   taxableIncome,
   filingStatus = "unmarried",
   ssfContributor = false,
 ) {
   const normalizedStatus = normalizeFilingStatus(filingStatus);
-  const slab1Rate = ssfContributor ? 0 : 1;
+  const baseSlabs = NEPAL_TAX_SLABS[normalizedStatus];
 
-  const slabs =
-    normalizedStatus === "married"
-      ? [
-          { upto: 600000, rate: slab1Rate },
-          { upto: 200000, rate: 10 },
-          { upto: 300000, rate: 20 },
-          { upto: 900000, rate: 30 },
-          { upto: 3000000, rate: 36 },
-          { upto: Number.MAX_SAFE_INTEGER, rate: 39 },
-        ]
-      : [
-          { upto: 500000, rate: slab1Rate },
-          { upto: 200000, rate: 10 },
-          { upto: 300000, rate: 20 },
-          { upto: 1000000, rate: 30 },
-          { upto: 3000000, rate: 36 },
-          { upto: Number.MAX_SAFE_INTEGER, rate: 39 },
-        ];
+  // SSF contributors are exempt from the 1% Social Security Tax on the
+  // first slab, so override that rate to 0%.
+  const slabs = baseSlabs.map((slab, idx) =>
+    idx === 0 && ssfContributor ? { ...slab, rate: 0 } : slab,
+  );
 
   let remaining = Math.max(0, toNumber(taxableIncome, 0));
   let tax = 0;
@@ -266,6 +280,7 @@ function renderPayslipHtml({ employee, payroll, month }) {
 }
 
 module.exports = {
+  FISCAL_YEAR,
   NEPAL_TAX_SLABS,
   normalizeFilingStatus,
   calculateAnnualTax,

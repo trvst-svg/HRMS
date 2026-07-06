@@ -154,7 +154,7 @@ async function getEmployees(req, res) {
         pagination: { page: 1, limit: safeLimit, total: 0, pages: 1 },
       });
     }
-    if (role && String(role) !== "employee") {
+    if (role && !["employee", "project_manager"].includes(String(role))) {
       return res.json({
         data: [],
         pagination: { page: 1, limit: safeLimit, total: 0, pages: 1 },
@@ -163,13 +163,21 @@ async function getEmployees(req, res) {
 
     let queryStr = `
       SELECT e.id AS _id, e.id, e.employee_id as "employeeId", e.first_name as "firstName", e.last_name as "lastName", e.email, e.phone, e.department, e.designation, e.join_date as "joinDate", e.status, e.annual_salary as "annualSalary", e.filing_status as "filingStatus", e.base_salary as "baseSalary", e.created_at as "createdAt", e.updated_at as "updatedAt",
-             u.name as u_name, u.email as u_email, u.role as u_role,
+             u.name as u_name, u.email as u_email, u.role as u_role, u.avatar as u_avatar,
              COUNT(*) OVER()::int as total_count
       FROM employees e
       JOIN users u ON e.user_id = u.id
-      WHERE e.department = $1 AND u.role = 'employee'
+      WHERE e.department = $1 AND u.role IN ('employee', 'project_manager')
     `;
     const params = [department];
+
+    if (role) {
+      if (role === "employee") {
+        queryStr += ` AND u.role IN ('employee', 'project_manager')`;
+      } else if (role === "project_manager") {
+        queryStr += ` AND u.role = 'project_manager'`;
+      }
+    }
 
     if (status && ["active", "inactive"].includes(String(status))) {
       params.push(status);
@@ -215,6 +223,7 @@ async function getEmployees(req, res) {
         name: r.u_name,
         email: r.u_email,
         role: r.u_role,
+        avatar: r.u_avatar || null,
       },
     }));
 

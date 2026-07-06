@@ -19,15 +19,8 @@ export default function AdminProfilePage() {
 
   return (
     <div className="animate-fade-in">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        <h1 style={{ fontSize: "var(--font-size-2xl)", fontWeight: 700, margin: 0 }}>
+      <div className="page-header">
+        <h1 className="page-title" style={{ margin: 0 }}>
           My Profile
         </h1>
         <div style={{ display: "flex", gap: "var(--space-3)" }}>

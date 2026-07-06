@@ -139,7 +139,7 @@
   --sidebar-width: 260px;
   --sidebar-collapsed-width: 72px;
   --header-height: 64px;
-  --content-max-width: 1400px;
+  --content-max-width: 1280px;
 
   /* Z-index */
   --z-sidebar: 100;
@@ -516,5 +516,99 @@ button:disabled {
   }
   .grid-responsive-3-2 {
     grid-template-columns: 3fr 2fr;
+  }
+}
+/* ---------- Page Layout Helpers ---------- */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  gap: var(--space-3);
+}
+
+.page-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.page-filters {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.page-filters select,
+.page-filters input[type="date"],
+.page-filters input[type="month"] {
+  flex: 0 1 180px;
+}
+
+.page-filters__search {
+  position: relative;
+  flex: 1 1 200px;
+}
+
+/* Form layouts */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+/* ---------- Mobile Global Overrides ---------- */
+@media (max-width: 768px) {
+  /* Reduce page title size */
+  h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Stack page headers that use flex row with space-between */
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  /* Mobile stack utility */
+  .mobile-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Collapse two-column form grids to single column */
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Page title consistent sizing */
+  .page-title {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Page header button full-width on mobile */
+  .page-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Page filters stack vertically */
+  .page-filters {
+    flex-direction: column;
+  }
+
+  .page-filters select,
+  .page-filters input[type="date"],
+  .page-filters input[type="month"] {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .page-filters__search {
+    flex: 1 1 auto;
+    width: 100%;
   }
 }

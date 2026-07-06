@@ -12,9 +12,11 @@ const {
   deleteEmployee,
 } = require("../controllers/commands/adminCommands");
 
+const { uploadAvatar } = require("../middleware/upload");
+
 const router = express.Router();
 
-router.post("/", createEmployee);
+router.post("/", uploadAvatar, createEmployee);
 router.get("/", getEmployees);
 router.get("/:id/profile", getEmployeeProfile);
 router.patch("/:id", updateEmployee);

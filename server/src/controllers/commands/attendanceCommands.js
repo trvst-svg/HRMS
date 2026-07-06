@@ -25,6 +25,17 @@ async function checkIn(req, res) {
     );
     let record = result.rows[0];
 
+    // Check if today is a holiday
+    const holidayRes = await db.query(
+      "SELECT * FROM holidays WHERE date = $1 LIMIT 1",
+      [today],
+    );
+    if (holidayRes.rows.length > 0) {
+      return res.status(400).json({
+        message: `Today is a holiday (${holidayRes.rows[0].name}). Attendance check-in is not required.`,
+      });
+    }
+
     if (
       record &&
       ["Leave", "WFH"].includes(record.status || "") &&

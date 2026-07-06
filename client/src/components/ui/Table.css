@@ -96,3 +96,99 @@
 .table__page-btn:disabled {
   opacity: 0.3;
 }
+
+/* Desktop default: hide mobile card view */
+.table-cards {
+  display: none;
+}
+
+/* ---------- Mobile Card View ---------- */
+@media (max-width: 768px) {
+  .table-wrap {
+    border: none;
+    background: transparent;
+    backdrop-filter: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .table-scroll {
+    display: none;
+  }
+
+  .table-cards {
+    display: block;
+  }
+
+  .table-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4) var(--space-5);
+    width: 100%;
+    overflow-x: hidden;
+    margin-bottom: var(--space-3);
+    transition: all var(--transition-fast);
+  }
+
+  .table-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  .table-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-border);
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+  }
+
+  .table-card__row:last-child {
+    border-bottom: none;
+  }
+
+  .table-card__label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    min-width: 100px;
+  }
+
+  .table-card__value {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-align: right;
+    word-break: break-word;
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .table-card__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .table-cards__empty {
+    text-align: center;
+    padding: var(--space-10) var(--space-4);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .table__pagination {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+}

@@ -33,6 +33,8 @@ const { managerHolidayRouter } = require("./holidayRoutes");
 const { managerAnnouncementRouter } = require("./announcementRoutes");
 const { selfDocumentRouter } = require("./documentRoutes");
 
+const { uploadAvatar } = require("../middleware/upload");
+
 const router = express.Router();
 
 router.get("/ping", ping);
@@ -42,7 +44,7 @@ router.use(requireRole("manager", "department_head", "project_manager"));
 
 router.get("/dashboard-summary", dashboardSummary);
 router.get("/profile", getMyProfile);
-router.put("/profile", updateMyProfile);
+router.put("/profile", uploadAvatar, updateMyProfile);
 router.post("/change-password/request-otp", requestChangePasswordOtp);
 router.patch("/change-password", changeMyPassword);
 router.get("/employees", getEmployees);

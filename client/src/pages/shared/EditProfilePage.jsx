@@ -40,8 +40,25 @@ export default function EditProfilePage() {
     if (!form.firstName) return toast.error("First name required.");
     setSaving(true);
     try {
-      await updateMyProfile(form);
+      const formData = new FormData();
+      formData.append("firstName", form.firstName);
+      formData.append("lastName", form.lastName);
+      formData.append("phone", form.phone);
+      formData.append("designation", form.designation);
+      if (form.avatarFile) {
+        formData.append("avatar", form.avatarFile);
+      }
+
+      await updateMyProfile(formData);
       toast.success("Profile updated!");
+      
+      // Dispatch event to refresh sidebar avatar
+      window.dispatchEvent(
+        new CustomEvent("hrms-avatar-updated", {
+          detail: { email: data?.email },
+        })
+      );
+
       navigate(-1);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed");
@@ -63,6 +80,27 @@ export default function EditProfilePage() {
       </h1>
       <Card style={{ maxWidth: 520 }}>
         <CardContent>
+          {data?.avatar && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "var(--space-4)",
+              }}
+            >
+              <img
+                src={data.avatar}
+                alt="Current Profile"
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  border: "2px solid var(--color-border)",
+                }}
+              />
+            </div>
+          )}
           <form
             onSubmit={handleSubmit}
             style={{
@@ -101,6 +139,16 @@ export default function EditProfilePage() {
                 value={form.designation}
                 onChange={(e) =>
                   setForm({ ...form, designation: e.target.value })
+                }
+              />
+            </div>
+            <div className="form-group">
+              <label>Profile Picture</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  setForm({ ...form, avatarFile: e.target.files[0] })
                 }
               />
             </div>

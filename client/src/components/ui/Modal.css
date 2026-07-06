@@ -86,3 +86,29 @@
   padding: var(--space-6);
   overflow-y: auto;
 }
+
+/* Mobile: Modal fills width with minimal margins */
+@media (max-width: 768px) {
+  .modal-backdrop {
+    padding: var(--space-3);
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  }
+
+  .modal__header {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .modal__body {
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .modal--wide {
+    max-width: 100%;
+  }
+}
