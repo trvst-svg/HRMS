@@ -64,7 +64,8 @@ export function AuthProvider({ children }) {
     (userRole) => {
       const r = userRole || role;
       if (r === "admin") return "/admin-dashboard";
-      if (r === "manager") return "/manager-dashboard";
+      const isManager = r === "manager" || r === "project_manager" || r === "department_head";
+      if (isManager) return "/manager-dashboard";
       return "/dashboard";
     },
     [role],

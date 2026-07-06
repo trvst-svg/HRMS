@@ -120,14 +120,15 @@ export default function Sidebar({ mobileOpen, setMobileOpen }) {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
+  const isManager = role === "manager" || role === "project_manager" || role === "department_head";
   const menu =
     role === "admin"
       ? adminMenu
-      : role === "manager"
+      : isManager
         ? managerMenu
         : employeeMenu;
   const roleName =
-    role === "admin" ? "Admin" : role === "manager" ? "Manager" : "Employee";
+    role === "admin" ? "Admin" : isManager ? "Manager" : "Employee";
   const initials = getInitials(email?.split("@")[0] || "User");
 
   useEffect(() => {

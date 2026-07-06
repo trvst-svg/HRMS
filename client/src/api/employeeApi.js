@@ -2,7 +2,8 @@ import api from "./axios";
 
 const getBase = () => {
   const role = sessionStorage.getItem("role");
-  return role === "manager" ? "/manager" : "/admin";
+  const isManager = role === "manager" || role === "project_manager" || role === "department_head";
+  return isManager ? "/manager" : "/admin";
 };
 
 export const createEmployee = (data) => {

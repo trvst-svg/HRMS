@@ -2,13 +2,15 @@ import api from "./axios";
 
 const getManageBase = () => {
   const role = sessionStorage.getItem("role");
-  return role === "manager" ? "/manager" : "/admin";
+  const isManager = role === "manager" || role === "project_manager" || role === "department_head";
+  return isManager ? "/manager" : "/admin";
 };
 
 const getSelfBase = () => {
   const role = sessionStorage.getItem("role");
   if (role === "admin") return "/admin/my-attendance";
-  return role === "manager" ? "/manager/my-attendance" : "/employee/attendance";
+  const isManager = role === "manager" || role === "project_manager" || role === "department_head";
+  return isManager ? "/manager/my-attendance" : "/employee/attendance";
 };
 
 // Self

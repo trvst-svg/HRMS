@@ -2,19 +2,22 @@ import api from "./axios";
 
 const getManageBase = () => {
   const role = sessionStorage.getItem("role");
-  return role === "manager" ? "/manager" : "/admin";
+  const isManager = role === "manager" || role === "project_manager" || role === "department_head";
+  return isManager ? "/manager" : "/admin";
 };
 
 const getSelfLeaveBase = () => {
   const role = sessionStorage.getItem("role");
   if (role === "admin") return "/admin/my-leave";
-  return role === "manager" ? "/manager/my-leave" : "/employee/leave";
+  const isManager = role === "manager" || role === "project_manager" || role === "department_head";
+  return isManager ? "/manager/my-leave" : "/employee/leave";
 };
 
 const getSelfWfhBase = () => {
   const role = sessionStorage.getItem("role");
   if (role === "admin") return "/admin/my-wfh";
-  return role === "manager" ? "/manager/my-wfh" : "/employee/wfh";
+  const isManager = role === "manager" || role === "project_manager" || role === "department_head";
+  return isManager ? "/manager/my-wfh" : "/employee/wfh";
 };
 
 // Self: Leave

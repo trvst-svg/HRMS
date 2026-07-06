@@ -3,7 +3,8 @@ import api from "./axios";
 const getMyBase = () => {
   const role = sessionStorage.getItem("role");
   if (role === "admin") return "/admin/my-payroll";
-  return role === "manager" ? "/manager/my-payroll" : "/employee/payroll";
+  const isManager = role === "manager" || role === "project_manager" || role === "department_head";
+  return isManager ? "/manager/my-payroll" : "/employee/payroll";
 };
 
 export const getMyPayrolls = () => api.get(getMyBase());
