@@ -51,6 +51,26 @@ export default function AttendancePage() {
     },
   ];
 
+  const todayStr = (() => {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  })();
+
+  const todayRecord = data?.find(r => {
+    if (!r.date) return false;
+    const d = new Date(r.date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}` === todayStr;
+  });
+
+  const hasCheckedIn = !!(todayRecord && todayRecord.checkIn);
+  const hasCheckedOut = !!(todayRecord && todayRecord.checkOut);
+
   return (
     <div className="animate-fade-in">
       <h1
@@ -70,12 +90,21 @@ export default function AttendancePage() {
           flexWrap: "wrap",
         }}
       >
-        <Button icon={LogIn} variant="success" onClick={handleCheckIn}>
-          Check In
-        </Button>
-        <Button icon={LogOut} variant="danger" onClick={handleCheckOut}>
-          Check Out
-        </Button>
+        {!hasCheckedIn && (
+          <Button icon={LogIn} variant="success" onClick={handleCheckIn}>
+            Check In
+          </Button>
+        )}
+        {hasCheckedIn && !hasCheckedOut && (
+          <Button icon={LogOut} variant="danger" onClick={handleCheckOut}>
+            Check Out
+          </Button>
+        )}
+        {hasCheckedIn && hasCheckedOut && (
+          <span style={{ color: "var(--color-success)", fontWeight: 500 }}>
+            Attendance completed for today.
+          </span>
+        )}
       </div>
       <Card>
         <CardContent>

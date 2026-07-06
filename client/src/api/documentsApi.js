@@ -4,7 +4,7 @@ const getSelfBase = () => {
   const role = sessionStorage.getItem("role");
   if (role === "admin") return "/admin/my-documents";
   const isManager = role === "manager" || role === "project_manager" || role === "department_head";
-  return isManager ? "/manager/my-documents" : "/employee/documents";
+  return isManager ? "/manager/documents" : "/employee/documents";
 };
 
 const getAdminBase = () => "/admin/document-requests";
