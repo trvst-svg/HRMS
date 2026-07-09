@@ -1,16 +1,16 @@
-# Graph Report - HRMS  (2026-07-07)
+# Graph Report - HRMS  (2026-07-06)
 
 ## Corpus Check
-- 141 files · ~73,448 words
+- 141 files · ~73,342 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 858 nodes · 2044 edges · 55 communities (42 shown, 13 thin omitted)
+- 866 nodes · 2044 edges · 63 communities (42 shown, 21 thin omitted)
 - Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 163 edges (avg confidence: 0.56)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5da9bab1`
+- Built from commit: `ea0e4680`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -47,6 +47,7 @@
 - [[_COMMUNITY_Layout & Navigation Shell|Layout & Navigation Shell]]
 - [[_COMMUNITY_Department CRUD|Department CRUD]]
 - [[_COMMUNITY_Admin Dashboard Queries|Admin Dashboard Queries]]
+- [[_COMMUNITY_Graphify Tooling|Graphify Tooling]]
 - [[_COMMUNITY_HR Document Templates|HR Document Templates]]
 - [[_COMMUNITY_employeeRoutes.js|employeeRoutes.js]]
 - [[_COMMUNITY_Project Queries|Project Queries]]
@@ -63,6 +64,13 @@
 - [[_COMMUNITY_Nexora Brand Logo|Nexora Brand Logo]]
 - [[_COMMUNITY_graphify|graphify.md]]
 - [[_COMMUNITY_ProtectedRoute.jsx|ProtectedRoute.jsx]]
+- [[_COMMUNITY_Graphify Output Directories|Graphify Output Directories]]
+- [[_COMMUNITY_Graphify Path Tool|Graphify Path Tool]]
+- [[_COMMUNITY_Graphify Query Tool|Graphify Query Tool]]
+- [[_COMMUNITY_Graphify Knowledge Graph Rules|Graphify Knowledge Graph Rules]]
+- [[_COMMUNITY_Graphify Update Tool|Graphify Update Tool]]
+- [[_COMMUNITY_Graphify Skill|Graphify Skill]]
+- [[_COMMUNITY_Graphify Workflow|Graphify Workflow]]
 - [[_COMMUNITY_meetingController.js|meetingController.js]]
 - [[_COMMUNITY_adminQueries.js|adminQueries.js]]
 - [[_COMMUNITY_enterpriseRoutes.js|enterpriseRoutes.js]]
@@ -100,7 +108,7 @@
 ## Hyperedges (group relationships)
 - **HR Document Generation Templates** — server_src_templates_employmentverification_template, server_src_templates_experienceletter_template, server_src_templates_nocletter_template, server_src_templates_offerletter_template, server_src_templates_payslip_template, server_src_templates_salarycertificate_template [INFERRED 0.85]
 
-## Communities (55 total, 13 thin omitted)
+## Communities (63 total, 21 thin omitted)
 
 ### Community 0 - "Admin API Layer"
 Cohesion: 0.08
@@ -286,19 +294,19 @@ Cohesion: 0.60
 Nodes (4): AuthContext, AuthProvider(), decodeToken(), isTokenValid()
 
 ## Knowledge Gaps
-- **292 isolated node(s):** `graphify`, `Workflow: graphify`, `name`, `private`, `version` (+287 more)
+- **300 isolated node(s):** `name`, `private`, `version`, `type`, `dev` (+295 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **21 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `PageLoader()` connect `Admin API Layer` to `Project Management APIs`, `Client Routing & Pages`, `Attendance & Payroll APIs`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **Why does `axios` connect `Client Dependencies` to `Attendance & Payroll APIs`?**
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
-- **What connects `graphify`, `Workflow: graphify`, `name` to the rest of the system?**
-  _292 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `name`, `private`, `version` to the rest of the system?**
+  _300 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Admin API Layer` be split into smaller, more focused modules?**
   _Cohesion score 0.07764050387596899 - nodes in this community are weakly interconnected._
 - **Should `Employee CRUD Commands` be split into smaller, more focused modules?**
