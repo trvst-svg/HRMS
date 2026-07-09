@@ -1,5 +1,5 @@
-const db = require("../../config/db");
-const { getOrCreateEmployeeForUser } = require("./employeeQueries");
+import db from "../../config/db.js";
+import { getOrCreateEmployeeForUser } from "./employeeQueries.js";
 
 function startOfDay(input = new Date()) {
   const d = new Date(input);
@@ -194,7 +194,5 @@ async function getMyAttendance(req, res) {
   }
 }
 
-module.exports = {
-  getAdminAttendance,
-  getMyAttendance,
-};
+export { getAdminAttendance, getMyAttendance };
+export default { getAdminAttendance, getMyAttendance };

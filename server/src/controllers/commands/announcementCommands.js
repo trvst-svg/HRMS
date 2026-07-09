@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 async function createAnnouncement(req, res) {
   try {
@@ -66,7 +66,5 @@ async function deleteAnnouncement(req, res) {
   }
 }
 
-module.exports = {
-  createAnnouncement,
-  deleteAnnouncement,
-};
+export { createAnnouncement, deleteAnnouncement };
+export default { createAnnouncement, deleteAnnouncement };

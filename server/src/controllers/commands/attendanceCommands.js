@@ -1,5 +1,5 @@
-const db = require("../../config/db");
-const { getOrCreateEmployeeForUser } = require("../queries/employeeQueries");
+import db from "../../config/db.js";
+import { getOrCreateEmployeeForUser } from "../queries/employeeQueries.js";
 
 function normalizeDate(input = new Date()) {
   const d = new Date(input);
@@ -124,7 +124,5 @@ async function checkOut(req, res) {
   }
 }
 
-module.exports = {
-  checkIn,
-  checkOut,
-};
+export { checkIn, checkOut };
+export default { checkIn, checkOut };

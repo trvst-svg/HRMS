@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 async function getAnnouncements(req, res) {
   try {
@@ -15,6 +15,5 @@ async function getAnnouncements(req, res) {
   }
 }
 
-module.exports = {
-  getAnnouncements,
-};
+export { getAnnouncements };
+export default { getAnnouncements };

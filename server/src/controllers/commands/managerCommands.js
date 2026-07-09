@@ -1,8 +1,8 @@
-const db = require("../../config/db");
-const { notifyLeaveOrWfhDecision } = require("../../services/mailService");
-const {
+import db from "../../config/db.js";
+import { notifyLeaveOrWfhDecision } from "../../services/mailService.js";
+import {
   applyApprovedRequestToAttendance,
-} = require("../../services/attendanceStatusService");
+} from "../../services/attendanceStatusService.js";
 
 async function getManagerDepartment(userId) {
   const result = await db.query(
@@ -331,9 +331,5 @@ async function rejectWfh(req, res) {
   }
 }
 
-module.exports = {
-  approveLeave,
-  rejectLeave,
-  approveWfh,
-  rejectWfh,
-};
+export { approveLeave, rejectLeave, approveWfh, rejectWfh };
+export default { approveLeave, rejectLeave, approveWfh, rejectWfh };

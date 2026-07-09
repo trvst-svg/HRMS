@@ -1,5 +1,5 @@
-const db = require("../config/db");
-const { getOrCreateEmployeeForUser } = require("./queries/employeeQueries");
+import db from "../config/db.js";
+import { getOrCreateEmployeeForUser } from "./queries/employeeQueries.js";
 
 async function createExpenseClaim(req, res) {
   try {
@@ -113,9 +113,5 @@ async function reviewExpenseClaim(req, res) {
   }
 }
 
-module.exports = {
-  createExpenseClaim,
-  getMyExpenseClaims,
-  getAllExpenseClaims,
-  reviewExpenseClaim,
-};
+export { createExpenseClaim, getMyExpenseClaims, getAllExpenseClaims, reviewExpenseClaim };
+export default { createExpenseClaim, getMyExpenseClaims, getAllExpenseClaims, reviewExpenseClaim };

@@ -1,18 +1,18 @@
 // routes/employeeRoutes.js
 // Admin side employee management routes.
 
-const express = require("express");
-const {
+import express from "express";
+import {
   getEmployees,
   getEmployeeProfile,
-} = require("../controllers/queries/adminQueries");
-const {
+} from "../controllers/queries/adminQueries.js";
+import {
   createEmployee,
   updateEmployee,
   deleteEmployee,
-} = require("../controllers/commands/adminCommands");
+} from "../controllers/commands/adminCommands.js";
 
-const { uploadAvatar } = require("../middleware/upload");
+import { uploadAvatar } from "../middleware/upload.js";
 
 const router = express.Router();
 
@@ -22,4 +22,4 @@ router.get("/:id/profile", getEmployeeProfile);
 router.patch("/:id", updateEmployee);
 router.delete("/:id", deleteEmployee);
 
-module.exports = router;
+export default router;

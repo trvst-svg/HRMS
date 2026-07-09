@@ -1,12 +1,12 @@
 // routes/holidayRoutes.js
 // Separate holiday routes for admin and employee.
 
-const express = require("express");
-const { getHolidays } = require("../controllers/queries/holidayQueries");
-const {
+import express from "express";
+import { getHolidays } from "../controllers/queries/holidayQueries.js";
+import {
   createHoliday,
   deleteHoliday,
-} = require("../controllers/commands/holidayCommands");
+} from "../controllers/commands/holidayCommands.js";
 
 const adminHolidayRouter = express.Router();
 adminHolidayRouter.get("/", getHolidays);
@@ -20,8 +20,5 @@ managerHolidayRouter.get("/", getHolidays);
 const employeeHolidayRouter = express.Router();
 employeeHolidayRouter.get("/", getHolidays);
 
-module.exports = {
-  adminHolidayRouter,
-  managerHolidayRouter,
-  employeeHolidayRouter,
-};
+export { adminHolidayRouter, managerHolidayRouter, employeeHolidayRouter };
+export default { adminHolidayRouter, managerHolidayRouter, employeeHolidayRouter };

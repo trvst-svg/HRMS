@@ -20,7 +20,7 @@
  * the full OAuth refresh flow and store the refresh token securely.
  */
 
-const https = require("https");
+import https from "https";
 
 const LINKEDIN_API_BASE = "api.linkedin.com";
 const UGC_POSTS_PATH = "/v2/ugcPosts";
@@ -173,4 +173,5 @@ function getMyProfileUrn(accessToken) {
   });
 }
 
-module.exports = { postJobToLinkedIn };
+export { postJobToLinkedIn };
+export default { postJobToLinkedIn };

@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 async function getDepartments(req, res) {
   try {
@@ -12,6 +12,5 @@ async function getDepartments(req, res) {
   }
 }
 
-module.exports = {
-  getDepartments,
-};
+export { getDepartments };
+export default { getDepartments };

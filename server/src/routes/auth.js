@@ -1,17 +1,17 @@
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const db = require("../config/db");
-const { OTP_REQUIRED_EMAIL } = require("../config/mail");
-const { createAndSendOtp, verifyOtp } = require("../services/otpService");
-const {
+import express from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import db from "../config/db.js";
+import { OTP_REQUIRED_EMAIL } from "../config/mail.js";
+import { createAndSendOtp, verifyOtp } from "../services/otpService.js";
+import {
   loginLimiter,
   loginSlowDown,
   otpLimiter,
   forgotPasswordLimiter,
-} = require("../middleware/rateLimiter");
+} from "../middleware/rateLimiter.js";
 
-const { protect, requireRole } = require("../middleware/auth");
+import { protect, requireRole } from "../middleware/auth.js";
 
 const router = express.Router();
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -434,4 +434,4 @@ router.post(
   },
 );
 
-module.exports = router;
+export default router;

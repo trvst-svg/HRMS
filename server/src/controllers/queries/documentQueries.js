@@ -1,6 +1,6 @@
-const db = require("../../config/db");
-const { getOrCreateEmployeeForUser } = require("./employeeQueries");
-const { htmlToPdfBuffer } = require("../../services/htmlPdfService");
+import db from "../../config/db.js";
+import { getOrCreateEmployeeForUser } from "./employeeQueries.js";
+import { htmlToPdfBuffer } from "../../services/htmlPdfService.js";
 
 async function getMyDocumentRequests(req, res) {
   try {
@@ -207,11 +207,5 @@ async function downloadMyApprovedDocumentPdf(req, res) {
   }
 }
 
-module.exports = {
-  getMyDocumentRequests,
-  getAdminDocumentRequests,
-  getApprovedDocumentHtml,
-  getMyApprovedDocumentHtml,
-  downloadApprovedDocumentPdf,
-  downloadMyApprovedDocumentPdf,
-};
+export { getMyDocumentRequests, getAdminDocumentRequests, getApprovedDocumentHtml, getMyApprovedDocumentHtml, downloadApprovedDocumentPdf, downloadMyApprovedDocumentPdf };
+export default { getMyDocumentRequests, getAdminDocumentRequests, getApprovedDocumentHtml, getMyApprovedDocumentHtml, downloadApprovedDocumentPdf, downloadMyApprovedDocumentPdf };

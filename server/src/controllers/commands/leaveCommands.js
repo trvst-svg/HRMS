@@ -1,9 +1,9 @@
-const db = require("../../config/db");
-const { getOrCreateEmployeeForUser } = require("../queries/employeeQueries");
-const { notifyLeaveOrWfhDecision } = require("../../services/mailService");
-const {
+import db from "../../config/db.js";
+import { getOrCreateEmployeeForUser } from "../queries/employeeQueries.js";
+import { notifyLeaveOrWfhDecision } from "../../services/mailService.js";
+import {
   applyApprovedRequestToAttendance,
-} = require("../../services/attendanceStatusService");
+} from "../../services/attendanceStatusService.js";
 
 const DATE_ONLY_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 const REASON_REGEX = /^[A-Za-z0-9][A-Za-z0-9\s.,'()&-]{2,249}$/;
@@ -448,11 +448,5 @@ async function rejectWfh(req, res) {
   }
 }
 
-module.exports = {
-  createLeave,
-  approveLeave,
-  rejectLeave,
-  createWfh,
-  approveWfh,
-  rejectWfh,
-};
+export { createLeave, approveLeave, rejectLeave, createWfh, approveWfh, rejectWfh };
+export default { createLeave, approveLeave, rejectLeave, createWfh, approveWfh, rejectWfh };

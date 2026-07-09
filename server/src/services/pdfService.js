@@ -1,8 +1,15 @@
 // services/pdfService.js
 // Simple template renderer (HTML based).
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+
+// ESM __dirname equivalent
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const TEMPLATE_MAP = {
   "Experience Letter": "experienceLetter.html",
@@ -33,6 +40,5 @@ function renderDocumentHtml(type, data) {
   return replacePlaceholders(htmlTemplate, data);
 }
 
-module.exports = {
-  renderDocumentHtml,
-};
+export { renderDocumentHtml };
+export default { renderDocumentHtml };

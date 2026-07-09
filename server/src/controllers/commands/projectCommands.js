@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 async function createProject(req, res) {
   try {
@@ -745,16 +745,5 @@ async function updateTaskStatus(req, res) {
   }
 }
 
-module.exports = {
-  createProject,
-  updateDocumentation,
-  assignMembers,
-  createTask,
-  requestReport,
-  submitReport,
-  requestExtension,
-  reviewExtension,
-  requestTransfer,
-  reviewTransfer,
-  updateTaskStatus,
-};
+export { createProject, updateDocumentation, assignMembers, createTask, requestReport, submitReport, requestExtension, reviewExtension, requestTransfer, reviewTransfer, updateTaskStatus };
+export default { createProject, updateDocumentation, assignMembers, createTask, requestReport, submitReport, requestExtension, reviewExtension, requestTransfer, reviewTransfer, updateTaskStatus };

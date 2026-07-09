@@ -1,4 +1,4 @@
-const db = require("../config/db");
+import db from "../config/db.js";
 
 function normalizeDate(input = new Date()) {
   const d = new Date(input);
@@ -52,6 +52,5 @@ async function applyApprovedRequestToAttendance({
   }
 }
 
-module.exports = {
-  applyApprovedRequestToAttendance,
-};
+export { applyApprovedRequestToAttendance };
+export default { applyApprovedRequestToAttendance };

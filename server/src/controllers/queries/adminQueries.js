@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 function normalizeDate(input = new Date()) {
   const d = new Date(input);
@@ -393,10 +393,5 @@ async function analytics(req, res) {
   }
 }
 
-module.exports = {
-  ping,
-  getEmployees,
-  getEmployeeProfile,
-  dashboardSummary,
-  analytics,
-};
+export { ping, getEmployees, getEmployeeProfile, dashboardSummary, analytics };
+export default { ping, getEmployees, getEmployeeProfile, dashboardSummary, analytics };

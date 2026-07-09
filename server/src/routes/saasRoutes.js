@@ -1,7 +1,7 @@
-const express = require("express");
-const { protect, requireRole } = require("../middleware/auth");
-const commands = require("../controllers/commands/saasCommands");
-const queries = require("../controllers/queries/saasQueries");
+import express from "express";
+import { protect, requireRole } from "../middleware/auth.js";
+import commands from "../controllers/commands/saasCommands.js";
+import queries from "../controllers/queries/saasQueries.js";
 
 const router = express.Router();
 
@@ -50,4 +50,4 @@ router.post(
   commands.assignShift,
 );
 
-module.exports = router;
+export default router;

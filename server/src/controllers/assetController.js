@@ -1,5 +1,5 @@
-const db = require("../config/db");
-const { getOrCreateEmployeeForUser } = require("./queries/employeeQueries");
+import db from "../config/db.js";
+import { getOrCreateEmployeeForUser } from "./queries/employeeQueries.js";
 
 async function createAsset(req, res) {
   try {
@@ -119,9 +119,5 @@ async function updateAssetAssignment(req, res) {
   }
 }
 
-module.exports = {
-  createAsset,
-  getAllAssets,
-  getMyAssets,
-  updateAssetAssignment,
-};
+export { createAsset, getAllAssets, getMyAssets, updateAssetAssignment };
+export default { createAsset, getAllAssets, getMyAssets, updateAssetAssignment };

@@ -1,14 +1,14 @@
 // routes/announcementRoutes.js
 // Admin announcement routes.
 
-const express = require("express");
-const {
+import express from "express";
+import {
   getAnnouncements,
-} = require("../controllers/queries/announcementQueries");
-const {
+} from "../controllers/queries/announcementQueries.js";
+import {
   createAnnouncement,
   deleteAnnouncement,
-} = require("../controllers/commands/announcementCommands");
+} from "../controllers/commands/announcementCommands.js";
 
 const router = express.Router();
 const managerAnnouncementRouter = express.Router();
@@ -20,5 +20,5 @@ router.delete("/:id", deleteAnnouncement);
 // Manager can only view announcements.
 managerAnnouncementRouter.get("/", getAnnouncements);
 
-module.exports = router;
-module.exports.managerAnnouncementRouter = managerAnnouncementRouter;
+export default router;
+export { managerAnnouncementRouter };

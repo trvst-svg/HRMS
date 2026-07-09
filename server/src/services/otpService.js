@@ -1,5 +1,5 @@
-const db = require("../config/db");
-const { sendMail } = require("./mailService");
+import db from "../config/db.js";
+import { sendMail } from "./mailService.js";
 
 function generateCode() {
   return String(Math.floor(100000 + Math.random() * 900000));
@@ -18,7 +18,5 @@ async function verifyOtp({ email, purpose = "login", code }) {
   return true;
 }
 
-module.exports = {
-  createAndSendOtp,
-  verifyOtp,
-};
+export { createAndSendOtp, verifyOtp };
+export default { createAndSendOtp, verifyOtp };

@@ -1,5 +1,5 @@
-const db = require("../../config/db");
-const { postJobToLinkedIn } = require("../../services/linkedInService");
+import db from "../../config/db.js";
+import { postJobToLinkedIn } from "../../services/linkedInService.js";
 
 // Helper for GPS distance check (Haversine formula)
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -461,14 +461,5 @@ async function assignShift(req, res) {
   }
 }
 
-module.exports = {
-  checkInGps,
-  issueContract,
-  signContract,
-  createOkr,
-  updateOkrProgress,
-  createJobPosting,
-  applyJob,
-  updateApplicationStatus,
-  assignShift,
-};
+export { checkInGps, issueContract, signContract, createOkr, updateOkrProgress, createJobPosting, applyJob, updateApplicationStatus, assignShift };
+export default { checkInGps, issueContract, signContract, createOkr, updateOkrProgress, createJobPosting, applyJob, updateApplicationStatus, assignShift };

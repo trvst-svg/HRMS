@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 async function getContracts(req, res) {
   try {
@@ -132,10 +132,5 @@ async function getShifts(req, res) {
   }
 }
 
-module.exports = {
-  getContracts,
-  getOkrs,
-  getJobPostings,
-  getJobApplications,
-  getShifts,
-};
+export { getContracts, getOkrs, getJobPostings, getJobApplications, getShifts };
+export default { getContracts, getOkrs, getJobPostings, getJobApplications, getShifts };

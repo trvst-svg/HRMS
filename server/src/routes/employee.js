@@ -1,27 +1,27 @@
 // routes/employee.js
 // Main employee router. Simple + readable.
 
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
-const { protect, requireRole } = require("../middleware/auth");
-const {
+import { protect, requireRole } from "../middleware/auth.js";
+import {
   getEmployeeDashboardSummary,
   getMyProfile,
-} = require("../controllers/queries/employeeQueries");
-const {
+} from "../controllers/queries/employeeQueries.js";
+import {
   updateMyProfile,
   requestChangePasswordOtp,
   changeMyPassword,
-} = require("../controllers/commands/employeeCommands");
-const { employeeAttendanceRouter } = require("./attendanceRoutes");
-const { employeeLeaveRouter } = require("./leaveRoutes");
-const { employeeWfhRouter } = require("./wfhRoutes");
-const { employeePayrollRouter } = require("./payrollRoutes");
-const { employeeHolidayRouter } = require("./holidayRoutes");
-const { selfDocumentRouter } = require("./documentRoutes");
+} from "../controllers/commands/employeeCommands.js";
+import { employeeAttendanceRouter } from "./attendanceRoutes.js";
+import { employeeLeaveRouter } from "./leaveRoutes.js";
+import { employeeWfhRouter } from "./wfhRoutes.js";
+import { employeePayrollRouter } from "./payrollRoutes.js";
+import { employeeHolidayRouter } from "./holidayRoutes.js";
+import { selfDocumentRouter } from "./documentRoutes.js";
 
-const { uploadAvatar } = require("../middleware/upload");
+import { uploadAvatar } from "../middleware/upload.js";
 
 // All employee routes need auth + employee role.
 router.use(protect);
@@ -45,4 +45,4 @@ router.use("/holidays", employeeHolidayRouter);
 router.use("/payroll", employeePayrollRouter);
 router.use("/documents", selfDocumentRouter);
 
-module.exports = router;
+export default router;

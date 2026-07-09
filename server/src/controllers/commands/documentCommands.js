@@ -1,6 +1,6 @@
-const db = require("../../config/db");
-const { getOrCreateEmployeeForUser } = require("../queries/employeeQueries");
-const { renderDocumentHtml } = require("../../services/pdfService");
+import db from "../../config/db.js";
+import { getOrCreateEmployeeForUser } from "../queries/employeeQueries.js";
+import { renderDocumentHtml } from "../../services/pdfService.js";
 
 const allowedTypes = [
   "Experience Letter",
@@ -150,8 +150,5 @@ async function rejectDocumentRequest(req, res) {
   }
 }
 
-module.exports = {
-  createMyDocumentRequest,
-  approveDocumentRequest,
-  rejectDocumentRequest,
-};
+export { createMyDocumentRequest, approveDocumentRequest, rejectDocumentRequest };
+export default { createMyDocumentRequest, approveDocumentRequest, rejectDocumentRequest };

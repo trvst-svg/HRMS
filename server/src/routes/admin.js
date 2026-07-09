@@ -1,38 +1,38 @@
 // routes/admin.js
 // Main admin router. We keep it small and clean.
 
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
-const {
+import {
   protect,
   requireRole,
   requireHRorAdmin,
-} = require("../middleware/auth");
-const {
+} from "../middleware/auth.js";
+import {
   ping,
   dashboardSummary,
   analytics,
-} = require("../controllers/queries/adminQueries");
+} from "../controllers/queries/adminQueries.js";
 
-const employeeRoutes = require("./employeeRoutes");
-const announcementRoutes = require("./announcementRoutes");
-const { adminAttendanceRouter, employeeAttendanceRouter } = require("./attendanceRoutes");
-const { adminLeaveRouter, employeeLeaveRouter } = require("./leaveRoutes");
-const { adminWfhRouter, employeeWfhRouter } = require("./wfhRoutes");
-const { adminPayrollRouter, employeePayrollRouter } = require("./payrollRoutes");
-const { adminHolidayRouter } = require("./holidayRoutes");
-const departmentRoutes = require("./departmentRoutes");
-const { adminDocumentRouter, selfDocumentRouter } = require("./documentRoutes");
+import employeeRoutes from "./employeeRoutes.js";
+import announcementRoutes from "./announcementRoutes.js";
+import { adminAttendanceRouter, employeeAttendanceRouter } from "./attendanceRoutes.js";
+import { adminLeaveRouter, employeeLeaveRouter } from "./leaveRoutes.js";
+import { adminWfhRouter, employeeWfhRouter } from "./wfhRoutes.js";
+import { adminPayrollRouter, employeePayrollRouter } from "./payrollRoutes.js";
+import { adminHolidayRouter } from "./holidayRoutes.js";
+import departmentRoutes from "./departmentRoutes.js";
+import { adminDocumentRouter, selfDocumentRouter } from "./documentRoutes.js";
 
-const { getMyProfile } = require("../controllers/queries/employeeQueries");
-const {
+import { getMyProfile } from "../controllers/queries/employeeQueries.js";
+import {
   updateMyProfile,
   requestChangePasswordOtp,
   changeMyPassword,
-} = require("../controllers/commands/employeeCommands");
+} from "../controllers/commands/employeeCommands.js";
 
-const { uploadAvatar } = require("../middleware/upload");
+import { uploadAvatar } from "../middleware/upload.js";
 
 // Simple health check.
 router.get("/ping", ping);
@@ -69,4 +69,4 @@ router.use("/my-wfh", employeeWfhRouter);
 router.use("/my-payroll", employeePayrollRouter);
 router.use("/my-documents", selfDocumentRouter);
 
-module.exports = router;
+export default router;

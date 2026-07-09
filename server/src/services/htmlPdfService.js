@@ -1,7 +1,7 @@
 // services/htmlPdfService.js
 // Convert HTML string to PDF buffer using Puppeteer.
 
-const puppeteer = require("puppeteer");
+import puppeteer from "puppeteer";
 
 async function htmlToPdfBuffer(html) {
   const browser = await puppeteer.launch({
@@ -28,6 +28,5 @@ async function htmlToPdfBuffer(html) {
   }
 }
 
-module.exports = {
-  htmlToPdfBuffer,
-};
+export { htmlToPdfBuffer };
+export default { htmlToPdfBuffer };

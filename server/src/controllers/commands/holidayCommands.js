@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 function normalizeDate(input) {
   const d = new Date(input);
@@ -80,7 +80,5 @@ async function deleteHoliday(req, res) {
   }
 }
 
-module.exports = {
-  createHoliday,
-  deleteHoliday,
-};
+export { createHoliday, deleteHoliday };
+export default { createHoliday, deleteHoliday };

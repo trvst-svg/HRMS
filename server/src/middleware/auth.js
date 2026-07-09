@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const db = require("../config/db");
+import jwt from "jsonwebtoken";
+import db from "../config/db.js";
 
 const protect = async (req, res, next) => {
   try {
@@ -109,9 +109,5 @@ const requireManagerOrHRorAdmin = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  protect,
-  requireRole,
-  requireHRorAdmin,
-  requireManagerOrHRorAdmin,
-};
+export { protect, requireRole, requireHRorAdmin, requireManagerOrHRorAdmin };
+export default { protect, requireRole, requireHRorAdmin, requireManagerOrHRorAdmin };

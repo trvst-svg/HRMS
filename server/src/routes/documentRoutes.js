@@ -1,20 +1,20 @@
 // routes/documentRoutes.js
 // Document request routes for employee/manager/admin.
 
-const express = require("express");
-const {
+import express from "express";
+import {
   getMyDocumentRequests,
   getMyApprovedDocumentHtml,
   downloadMyApprovedDocumentPdf,
   getAdminDocumentRequests,
   getApprovedDocumentHtml,
   downloadApprovedDocumentPdf,
-} = require("../controllers/queries/documentQueries");
-const {
+} from "../controllers/queries/documentQueries.js";
+import {
   createMyDocumentRequest,
   approveDocumentRequest,
   rejectDocumentRequest,
-} = require("../controllers/commands/documentCommands");
+} from "../controllers/commands/documentCommands.js";
 
 const selfDocumentRouter = express.Router();
 selfDocumentRouter.post("/", createMyDocumentRequest);
@@ -29,7 +29,5 @@ adminDocumentRouter.patch("/:id/reject", rejectDocumentRequest);
 adminDocumentRouter.get("/:id/view", getApprovedDocumentHtml);
 adminDocumentRouter.get("/:id/download", downloadApprovedDocumentPdf);
 
-module.exports = {
-  selfDocumentRouter,
-  adminDocumentRouter,
-};
+export { selfDocumentRouter, adminDocumentRouter };
+export default { selfDocumentRouter, adminDocumentRouter };

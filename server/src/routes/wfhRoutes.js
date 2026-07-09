@@ -1,16 +1,16 @@
 // routes/wfhRoutes.js
 // Work from home routes for both admin and employee.
 
-const express = require("express");
-const {
+import express from "express";
+import {
   getMyWfh,
   getAdminWfhRequests,
-} = require("../controllers/queries/leaveQueries");
-const {
+} from "../controllers/queries/leaveQueries.js";
+import {
   createWfh,
   approveWfh,
   rejectWfh,
-} = require("../controllers/commands/leaveCommands");
+} from "../controllers/commands/leaveCommands.js";
 
 const employeeWfhRouter = express.Router();
 employeeWfhRouter.post("/", createWfh);
@@ -21,7 +21,5 @@ adminWfhRouter.get("/", getAdminWfhRequests);
 adminWfhRouter.patch("/:id/approve", approveWfh);
 adminWfhRouter.patch("/:id/reject", rejectWfh);
 
-module.exports = {
-  employeeWfhRouter,
-  adminWfhRouter,
-};
+export { employeeWfhRouter, adminWfhRouter };
+export default { employeeWfhRouter, adminWfhRouter };

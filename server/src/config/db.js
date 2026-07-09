@@ -1,6 +1,13 @@
-const { Pool, Client } = require("pg");
-const fs = require("fs");
-const path = require("path");
+import { Pool, Client } from "pg";
+import fs from "fs";
+import path from "path";
+
+// ESM __dirname equivalent
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const connectionString =
   process.env.DATABASE_URL ||
@@ -60,8 +67,6 @@ const connectDB = async () => {
   }
 };
 
-module.exports = {
-  connectDB,
-  query: (text, params) => pool.query(text, params),
-  pool,
-};
+const query = (text, params) => pool.query(text, params);
+export { connectDB, query, pool };
+export default { connectDB, query, pool };

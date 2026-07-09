@@ -1,15 +1,15 @@
 // routes/attendanceRoutes.js
 // We keep admin and employee attendance in one place.
 
-const express = require("express");
-const {
+import express from "express";
+import {
   getAdminAttendance,
   getMyAttendance,
-} = require("../controllers/queries/attendanceQueries");
-const {
+} from "../controllers/queries/attendanceQueries.js";
+import {
   checkIn,
   checkOut,
-} = require("../controllers/commands/attendanceCommands");
+} from "../controllers/commands/attendanceCommands.js";
 
 const adminAttendanceRouter = express.Router();
 adminAttendanceRouter.get("/", getAdminAttendance);
@@ -19,7 +19,5 @@ employeeAttendanceRouter.post("/check-in", checkIn);
 employeeAttendanceRouter.post("/check-out", checkOut);
 employeeAttendanceRouter.get("/", getMyAttendance);
 
-module.exports = {
-  adminAttendanceRouter,
-  employeeAttendanceRouter,
-};
+export { adminAttendanceRouter, employeeAttendanceRouter };
+export default { adminAttendanceRouter, employeeAttendanceRouter };

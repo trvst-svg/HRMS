@@ -1,5 +1,5 @@
-const db = require("../config/db");
-const { getOrCreateEmployeeForUser } = require("./queries/employeeQueries");
+import db from "../config/db.js";
+import { getOrCreateEmployeeForUser } from "./queries/employeeQueries.js";
 
 async function createReviewCycle(req, res) {
   try {
@@ -146,10 +146,5 @@ async function getAllReviews(req, res) {
   }
 }
 
-module.exports = {
-  createReviewCycle,
-  getMyReviews,
-  submitSelfAppraisal,
-  submitManagerAppraisal,
-  getAllReviews,
-};
+export { createReviewCycle, getMyReviews, submitSelfAppraisal, submitManagerAppraisal, getAllReviews };
+export default { createReviewCycle, getMyReviews, submitSelfAppraisal, submitManagerAppraisal, getAllReviews };

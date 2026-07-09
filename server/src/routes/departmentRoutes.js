@@ -1,10 +1,10 @@
 // routes/departmentRoutes.js
-const express = require("express");
-const { getDepartments } = require("../controllers/queries/departmentQueries");
-const {
+import express from "express";
+import { getDepartments } from "../controllers/queries/departmentQueries.js";
+import {
   createDepartment,
   deleteDepartment,
-} = require("../controllers/commands/departmentCommands");
+} from "../controllers/commands/departmentCommands.js";
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.get("/", getDepartments);
 router.post("/", createDepartment);
 router.delete("/:id", deleteDepartment);
 
-module.exports = router;
+export default router;

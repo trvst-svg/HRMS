@@ -1,21 +1,28 @@
 // backend/src/app.js
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const path = require("path");
-const { connectDB } = require("./config/db");
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import path from "path";
+import { connectDB } from "./config/db.js";
 
-const authRoute = require("./routes/auth");
-const adminRoute = require("./routes/admin");
-const managerRoute = require("./routes/manager");
-const employeeRoute = require("./routes/employee");
-const departmentRoutes = require("./routes/departmentRoutes");
-const projectRoutes = require("./routes/projectRoutes");
-const saasRoutes = require("./routes/saasRoutes");
-const enterpriseRoutes = require("./routes/enterpriseRoutes");
-const { protect, requireRole } = require("./middleware/auth");
-const sanitize = require("./middleware/sanitize");
-const { apiLimiter } = require("./middleware/rateLimiter");
+import authRoute from "./routes/auth.js";
+import adminRoute from "./routes/admin.js";
+import managerRoute from "./routes/manager.js";
+import employeeRoute from "./routes/employee.js";
+import departmentRoutes from "./routes/departmentRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import saasRoutes from "./routes/saasRoutes.js";
+import enterpriseRoutes from "./routes/enterpriseRoutes.js";
+import { protect, requireRole } from "./middleware/auth.js";
+import sanitize from "./middleware/sanitize.js";
+import { apiLimiter } from "./middleware/rateLimiter.js";
+
+// ESM __dirname equivalent
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const app = express();
 
@@ -148,4 +155,4 @@ app.use((err, req, res, _next) => {
   });
 });
 
-module.exports = app;
+export default app;

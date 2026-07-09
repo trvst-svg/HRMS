@@ -1,16 +1,16 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+import {
   protect,
   requireRole,
   requireHRorAdmin,
   requireManagerOrHRorAdmin,
-} = require("../middleware/auth");
+} from "../middleware/auth.js";
 
-const expenseCtrl = require("../controllers/expenseController");
-const assetCtrl = require("../controllers/assetController");
-const reviewCtrl = require("../controllers/reviewController");
-const meetingCtrl = require("../controllers/meetingController");
+import expenseCtrl from "../controllers/expenseController.js";
+import assetCtrl from "../controllers/assetController.js";
+import reviewCtrl from "../controllers/reviewController.js";
+import meetingCtrl from "../controllers/meetingController.js";
 
 // Expense claims
 router.post("/expenses", protect, expenseCtrl.createExpenseClaim);
@@ -72,4 +72,4 @@ router.get(
   meetingCtrl.getHrEmployees,
 );
 
-module.exports = router;
+export default router;

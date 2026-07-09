@@ -1,8 +1,16 @@
-const { Client } = require("pg");
-const fs = require("fs");
-const path = require("path");
-const bcrypt = require("bcryptjs");
-require("dotenv").config();
+import { Client } from "pg";
+import fs from "fs";
+import path from "path";
+import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+
+// ESM __dirname equivalent
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config();
 
 const connectionString =
   process.env.DATABASE_URL || "postgresql://postgres:admin@localhost:5432/hrms";

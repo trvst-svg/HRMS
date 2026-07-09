@@ -1,7 +1,7 @@
-const db = require("../../config/db");
-const bcrypt = require("bcryptjs");
-const { getOrCreateEmployeeForUser } = require("../queries/employeeQueries");
-const { createAndSendOtp, verifyOtp } = require("../../services/otpService");
+import db from "../../config/db.js";
+import bcrypt from "bcryptjs";
+import { getOrCreateEmployeeForUser } from "../queries/employeeQueries.js";
+import { createAndSendOtp, verifyOtp } from "../../services/otpService.js";
 
 const NAME_REGEX = /^[A-Za-z][A-Za-z\s.'-]{1,79}$/;
 const PHONE_REGEX = /^\+?[0-9]{7,15}$/;
@@ -151,8 +151,5 @@ async function requestChangePasswordOtp(req, res) {
   }
 }
 
-module.exports = {
-  updateMyProfile,
-  changeMyPassword,
-  requestChangePasswordOtp,
-};
+export { updateMyProfile, changeMyPassword, requestChangePasswordOtp };
+export default { updateMyProfile, changeMyPassword, requestChangePasswordOtp };

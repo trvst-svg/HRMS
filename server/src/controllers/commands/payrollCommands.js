@@ -1,10 +1,10 @@
-const db = require("../../config/db");
-const {
+import db from "../../config/db.js";
+import {
   normalizeFilingStatus,
   calculateMonthlyPayrollFromAnnual,
   renderPayslipHtml,
-} = require("../../services/payrollService");
-const { notifyPayslipDone } = require("../../services/mailService");
+} from "../../services/payrollService.js";
+import { notifyPayslipDone } from "../../services/mailService.js";
 
 function toNumber(v, fallback = 0) {
   const n = Number(v);
@@ -31,7 +31,7 @@ async function getEmployeeOr404(employeeId) {
   return employee;
 }
 
-const NepaliDate = require("nepali-date-converter").default || require("nepali-date-converter");
+import NepaliDate from "nepali-date-converter";
 
 function getWeeklyOffDays() {
   const config = String(process.env.WEEKLY_OFF_DAYS || "saturday").toLowerCase();
@@ -451,7 +451,5 @@ async function createPayroll(req, res) {
   }
 }
 
-module.exports = {
-  calculatePayroll,
-  createPayroll,
-};
+export { calculatePayroll, createPayroll };
+export default { calculatePayroll, createPayroll };

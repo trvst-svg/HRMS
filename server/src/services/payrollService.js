@@ -1,8 +1,15 @@
 // services/payrollService.js
 // Simple payroll helpers used by payroll controller.
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+
+// ESM __dirname equivalent
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 // ---------------------------------------------------------------------------
 // Nepal Income Tax Slabs — FY 2082/83 (2025/26)
@@ -279,11 +286,5 @@ function renderPayslipHtml({ employee, payroll, month }) {
   return replacePlaceholders(template, payload);
 }
 
-module.exports = {
-  FISCAL_YEAR,
-  NEPAL_TAX_SLABS,
-  normalizeFilingStatus,
-  calculateAnnualTax,
-  calculateMonthlyPayrollFromAnnual,
-  renderPayslipHtml,
-};
+export { FISCAL_YEAR, NEPAL_TAX_SLABS, normalizeFilingStatus, calculateAnnualTax, calculateMonthlyPayrollFromAnnual, renderPayslipHtml };
+export default { FISCAL_YEAR, NEPAL_TAX_SLABS, normalizeFilingStatus, calculateAnnualTax, calculateMonthlyPayrollFromAnnual, renderPayslipHtml };

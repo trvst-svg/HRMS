@@ -1,8 +1,8 @@
 // routes/payrollRoutes.js
 // Payroll routers for admin and employee.
 
-const express = require("express");
-const {
+import express from "express";
+import {
   getAdminPayrolls,
   getMyPayrolls,
   getTaxConfig,
@@ -10,11 +10,11 @@ const {
   getMyPayrollHtml,
   downloadAdminPayrollPdf,
   downloadMyPayrollPdf,
-} = require("../controllers/queries/payrollQueries");
-const {
+} from "../controllers/queries/payrollQueries.js";
+import {
   createPayroll,
   calculatePayroll,
-} = require("../controllers/commands/payrollCommands");
+} from "../controllers/commands/payrollCommands.js";
 
 const adminPayrollRouter = express.Router();
 adminPayrollRouter.get("/", getAdminPayrolls);
@@ -29,7 +29,5 @@ employeePayrollRouter.get("/", getMyPayrolls);
 employeePayrollRouter.get("/:id/html", getMyPayrollHtml);
 employeePayrollRouter.get("/:id/download", downloadMyPayrollPdf);
 
-module.exports = {
-  adminPayrollRouter,
-  employeePayrollRouter,
-};
+export { adminPayrollRouter, employeePayrollRouter };
+export default { adminPayrollRouter, employeePayrollRouter };

@@ -1,9 +1,9 @@
-const db = require("../../config/db");
-const bcrypt = require("bcryptjs");
-const {
+import db from "../../config/db.js";
+import bcrypt from "bcryptjs";
+import {
   notifyTerminationAction,
   sendWelcomeCredentialsMail,
-} = require("../../services/mailService");
+} from "../../services/mailService.js";
 
 const NAME_REGEX = /^[A-Za-z][A-Za-z\s.'-]{1,79}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -504,8 +504,5 @@ async function deleteEmployee(req, res) {
   }
 }
 
-module.exports = {
-  createEmployee,
-  updateEmployee,
-  deleteEmployee,
-};
+export { createEmployee, updateEmployee, deleteEmployee };
+export default { createEmployee, updateEmployee, deleteEmployee };

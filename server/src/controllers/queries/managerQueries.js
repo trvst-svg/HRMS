@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 function startOfDay(input = new Date()) {
   const d = new Date(input);
@@ -514,11 +514,5 @@ async function getWfhRequests(req, res) {
   }
 }
 
-module.exports = {
-  ping,
-  dashboardSummary,
-  getEmployees,
-  getAttendance,
-  getLeaveRequests,
-  getWfhRequests,
-};
+export { ping, dashboardSummary, getEmployees, getAttendance, getLeaveRequests, getWfhRequests };
+export default { ping, dashboardSummary, getEmployees, getAttendance, getLeaveRequests, getWfhRequests };

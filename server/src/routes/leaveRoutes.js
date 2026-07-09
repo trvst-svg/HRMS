@@ -1,16 +1,16 @@
 // routes/leaveRoutes.js
 // Leave routes for both admin and employee.
 
-const express = require("express");
-const {
+import express from "express";
+import {
   getMyLeave,
   getAdminLeaveRequests,
-} = require("../controllers/queries/leaveQueries");
-const {
+} from "../controllers/queries/leaveQueries.js";
+import {
   createLeave,
   approveLeave,
   rejectLeave,
-} = require("../controllers/commands/leaveCommands");
+} from "../controllers/commands/leaveCommands.js";
 
 const employeeLeaveRouter = express.Router();
 employeeLeaveRouter.post("/", createLeave);
@@ -21,7 +21,5 @@ adminLeaveRouter.get("/", getAdminLeaveRequests);
 adminLeaveRouter.patch("/:id/approve", approveLeave);
 adminLeaveRouter.patch("/:id/reject", rejectLeave);
 
-module.exports = {
-  employeeLeaveRouter,
-  adminLeaveRouter,
-};
+export { employeeLeaveRouter, adminLeaveRouter };
+export default { employeeLeaveRouter, adminLeaveRouter };

@@ -134,4 +134,4 @@ function sanitize(req, res, next) {
   }
 }
 
-module.exports = sanitize;
+export default sanitize;

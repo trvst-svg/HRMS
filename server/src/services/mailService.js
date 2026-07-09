@@ -1,7 +1,7 @@
 // backend/src/services/mailService.js
 // Small mail helper used by leave/WFH/payroll flows.
 
-const { MAIL_USER, MAIL_APP_PASSWORD, NOTIFY_TO } = require("../config/mail");
+import { MAIL_USER, MAIL_APP_PASSWORD, NOTIFY_TO } from "../config/mail.js";
 
 let nodemailer = null;
 try {
@@ -200,10 +200,5 @@ async function sendWelcomeCredentialsMail({
   return sendMail({ subject, text, html, to: email });
 }
 
-module.exports = {
-  sendMail,
-  notifyLeaveOrWfhDecision,
-  notifyPayslipDone,
-  notifyTerminationAction,
-  sendWelcomeCredentialsMail,
-};
+export { sendMail, notifyLeaveOrWfhDecision, notifyPayslipDone, notifyTerminationAction, sendWelcomeCredentialsMail };
+export default { sendMail, notifyLeaveOrWfhDecision, notifyPayslipDone, notifyTerminationAction, sendWelcomeCredentialsMail };

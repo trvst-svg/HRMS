@@ -1,7 +1,7 @@
-const express = require("express");
-const { protect, requireRole } = require("../middleware/auth");
-const commands = require("../controllers/commands/projectCommands");
-const queries = require("../controllers/queries/projectQueries");
+import express from "express";
+import { protect, requireRole } from "../middleware/auth.js";
+import commands from "../controllers/commands/projectCommands.js";
+import queries from "../controllers/queries/projectQueries.js";
 
 const router = express.Router();
 
@@ -36,4 +36,4 @@ router.post("/tasks/:id/request-transfer", protect, commands.requestTransfer);
 router.post("/tasks/:id/review-transfer", protect, commands.reviewTransfer);
 router.put("/tasks/:id/status", protect, commands.updateTaskStatus);
 
-module.exports = router;
+export default router;

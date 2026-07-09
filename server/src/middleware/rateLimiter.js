@@ -5,8 +5,8 @@
  * and to give every API route a reasonable general limit.
  */
 
-const rateLimit = require("express-rate-limit");
-const slowDown = require("express-slow-down");
+import rateLimit from "express-rate-limit";
+import slowDown from "express-slow-down";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helper: standardised 429 response
@@ -87,10 +87,5 @@ const apiLimiter = rateLimit({
   skip: (req) => req.path === "/" || req.path === "/health",
 });
 
-module.exports = {
-  loginLimiter,
-  loginSlowDown,
-  otpLimiter,
-  forgotPasswordLimiter,
-  apiLimiter,
-};
+export { loginLimiter, loginSlowDown, otpLimiter, forgotPasswordLimiter, apiLimiter };
+export default { loginLimiter, loginSlowDown, otpLimiter, forgotPasswordLimiter, apiLimiter };

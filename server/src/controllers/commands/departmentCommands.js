@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 async function createDepartment(req, res) {
   try {
@@ -59,7 +59,5 @@ async function deleteDepartment(req, res) {
   }
 }
 
-module.exports = {
-  createDepartment,
-  deleteDepartment,
-};
+export { createDepartment, deleteDepartment };
+export default { createDepartment, deleteDepartment };

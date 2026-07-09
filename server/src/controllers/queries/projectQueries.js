@@ -1,4 +1,4 @@
-const db = require("../../config/db");
+import db from "../../config/db.js";
 
 async function getAvailableManagers(req, res) {
   try {
@@ -208,10 +208,5 @@ async function getMyActiveTask(req, res) {
   }
 }
 
-module.exports = {
-  getAvailableManagers,
-  getAvailableEmployees,
-  getProjects,
-  getProjectDetails,
-  getMyActiveTask,
-};
+export { getAvailableManagers, getAvailableEmployees, getProjects, getProjectDetails, getMyActiveTask };
+export default { getAvailableManagers, getAvailableEmployees, getProjects, getProjectDetails, getMyActiveTask };

@@ -1,5 +1,5 @@
-const db = require("../../config/db");
-const { getOrCreateEmployeeForUser } = require("./employeeQueries");
+import db from "../../config/db.js";
+import { getOrCreateEmployeeForUser } from "./employeeQueries.js";
 
 async function getMyLeave(req, res) {
   try {
@@ -181,9 +181,5 @@ async function getAdminWfhRequests(req, res) {
   }
 }
 
-module.exports = {
-  getMyLeave,
-  getAdminLeaveRequests,
-  getMyWfh,
-  getAdminWfhRequests,
-};
+export { getMyLeave, getAdminLeaveRequests, getMyWfh, getAdminWfhRequests };
+export default { getMyLeave, getAdminLeaveRequests, getMyWfh, getAdminWfhRequests };

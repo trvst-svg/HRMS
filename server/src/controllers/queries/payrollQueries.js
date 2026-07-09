@@ -1,11 +1,11 @@
-const db = require("../../config/db");
-const { getOrCreateEmployeeForUser } = require("../queries/employeeQueries");
-const {
+import db from "../../config/db.js";
+import { getOrCreateEmployeeForUser } from "../queries/employeeQueries.js";
+import {
   FISCAL_YEAR,
   NEPAL_TAX_SLABS,
   renderPayslipHtml,
-} = require("../../services/payrollService");
-const { htmlToPdfBuffer } = require("../../services/htmlPdfService");
+} from "../../services/payrollService.js";
+import { htmlToPdfBuffer } from "../../services/htmlPdfService.js";
 
 async function getTaxConfig(req, res) {
   // Build cumulative-threshold view for display purposes
@@ -415,12 +415,5 @@ async function downloadMyPayrollPdf(req, res) {
   }
 }
 
-module.exports = {
-  getTaxConfig,
-  getAdminPayrolls,
-  getMyPayrolls,
-  getAdminPayrollHtml,
-  getMyPayrollHtml,
-  downloadAdminPayrollPdf,
-  downloadMyPayrollPdf,
-};
+export { getTaxConfig, getAdminPayrolls, getMyPayrolls, getAdminPayrollHtml, getMyPayrollHtml, downloadAdminPayrollPdf, downloadMyPayrollPdf };
+export default { getTaxConfig, getAdminPayrolls, getMyPayrolls, getAdminPayrollHtml, getMyPayrollHtml, downloadAdminPayrollPdf, downloadMyPayrollPdf };

@@ -1,5 +1,5 @@
-const db = require("../config/db");
-const { getOrCreateEmployeeForUser } = require("./queries/employeeQueries");
+import db from "../config/db.js";
+import { getOrCreateEmployeeForUser } from "./queries/employeeQueries.js";
 
 async function createMeeting(req, res) {
   try {
@@ -189,9 +189,5 @@ async function getHrEmployees(req, res) {
   }
 }
 
-module.exports = {
-  createMeeting,
-  getMeetings,
-  updateMeeting,
-  getHrEmployees,
-};
+export { createMeeting, getMeetings, updateMeeting, getHrEmployees };
+export default { createMeeting, getMeetings, updateMeeting, getHrEmployees };

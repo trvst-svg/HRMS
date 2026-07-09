@@ -3,37 +3,37 @@
 // 1) Team management (same department only)
 // 2) Personal pages (attendance + leave + wfh)
 
-const express = require("express");
-const { protect, requireRole } = require("../middleware/auth");
-const {
+import express from "express";
+import { protect, requireRole } from "../middleware/auth.js";
+import {
   ping,
   dashboardSummary,
   getEmployees,
   getAttendance,
   getLeaveRequests,
   getWfhRequests,
-} = require("../controllers/queries/managerQueries");
-const {
+} from "../controllers/queries/managerQueries.js";
+import {
   approveLeave,
   rejectLeave,
   approveWfh,
   rejectWfh,
-} = require("../controllers/commands/managerCommands");
-const { getMyProfile } = require("../controllers/queries/employeeQueries");
-const {
+} from "../controllers/commands/managerCommands.js";
+import { getMyProfile } from "../controllers/queries/employeeQueries.js";
+import {
   updateMyProfile,
   requestChangePasswordOtp,
   changeMyPassword,
-} = require("../controllers/commands/employeeCommands");
-const { employeeAttendanceRouter } = require("./attendanceRoutes");
-const { employeeLeaveRouter } = require("./leaveRoutes");
-const { employeeWfhRouter } = require("./wfhRoutes");
-const { employeePayrollRouter } = require("./payrollRoutes");
-const { managerHolidayRouter } = require("./holidayRoutes");
-const { managerAnnouncementRouter } = require("./announcementRoutes");
-const { selfDocumentRouter } = require("./documentRoutes");
+} from "../controllers/commands/employeeCommands.js";
+import { employeeAttendanceRouter } from "./attendanceRoutes.js";
+import { employeeLeaveRouter } from "./leaveRoutes.js";
+import { employeeWfhRouter } from "./wfhRoutes.js";
+import { employeePayrollRouter } from "./payrollRoutes.js";
+import { managerHolidayRouter } from "./holidayRoutes.js";
+import { managerAnnouncementRouter } from "./announcementRoutes.js";
+import { selfDocumentRouter } from "./documentRoutes.js";
 
-const { uploadAvatar } = require("../middleware/upload");
+import { uploadAvatar } from "../middleware/upload.js";
 
 const router = express.Router();
 
@@ -65,4 +65,4 @@ router.get("/wfh-requests", getWfhRequests);
 router.patch("/wfh-requests/:id/approve", approveWfh);
 router.patch("/wfh-requests/:id/reject", rejectWfh);
 
-module.exports = router;
+export default router;

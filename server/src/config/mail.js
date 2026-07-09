@@ -10,9 +10,5 @@ const OTP_REQUIRED_EMAIL = String(
   process.env.OTP_REQUIRED_EMAIL || "xshuvam7@gmail.com",
 ).toLowerCase();
 
-module.exports = {
-  MAIL_USER,
-  MAIL_APP_PASSWORD,
-  NOTIFY_TO,
-  OTP_REQUIRED_EMAIL,
-};
+export { MAIL_USER, MAIL_APP_PASSWORD, NOTIFY_TO, OTP_REQUIRED_EMAIL };
+export default { MAIL_USER, MAIL_APP_PASSWORD, NOTIFY_TO, OTP_REQUIRED_EMAIL };
